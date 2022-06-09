@@ -35,6 +35,8 @@ namespace Infrastructure.Models
 
         public int Trophies { get; set; }
 
+        public string Color { get; set; }
+
         public virtual ICollection<Player> Players { get; set; }
 
         public virtual ICollection<Tournament> Tournaments { get; set; }
