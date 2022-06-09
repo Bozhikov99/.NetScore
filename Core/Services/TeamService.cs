@@ -81,6 +81,14 @@ namespace Core.Services
             return teams;
         }
 
+        public async Task<EditTeamModel> GetEditModel(string id)
+        {
+            Team team = await repository.GetByIdAsync<Team>(id);
+            EditTeamModel model = mapper.Map<EditTeamModel>(team);
+
+            return model;
+        }
+
         public async Task RemovePlayer(string teamId, string playerId)
         {
             Team team = await repository.GetByIdAsync<Team>(teamId);

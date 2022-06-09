@@ -17,6 +17,8 @@ namespace Core.Services.Contracts
 
         Task<IEnumerable<ListTeamModel>> GetAll();
 
+        Task<EditTeamModel> GetEditModel(string id);
+
         Task<TeamDetailsModel> Details(string id);
 
         Task RemovePlayer(string teamId, string playerId);

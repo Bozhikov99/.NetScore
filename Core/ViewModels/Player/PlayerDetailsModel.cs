@@ -24,6 +24,8 @@ namespace Core.ViewModels.Player
 
         public string Country { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public DateTime? BirthDate { get; set; }
 
         public int Goals { get; set; }

@@ -35,6 +35,13 @@ namespace Web.Controllers
             return View(editPlayerModel);
         }
 
+        public async Task<IActionResult> Details(string id)
+        {
+            PlayerDetailsModel details = await playerService.Details(id);
+
+            return View(details);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(CreatePlayerModel model)
         {
@@ -61,9 +68,17 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Delete(string id)
         {
-            await playerService.Delete(id);
+            try
+            {
+                await playerService.Delete(id);
+            }
+            catch (Exception)
+            {
 
-            return new EmptyResult();
+                throw;
+            }
+
+            return Ok();
         }
     }
 }
