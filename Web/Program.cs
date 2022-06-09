@@ -1,6 +1,11 @@
+using Core.Mapping;
+using Core.Services;
+using Core.Services.Contracts;
 using Infrastructure;
+using Infrastructure.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +17,14 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<NetScoreDbContext>();
+
+//Automapper Profiles
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<PlayerProfile>());
+
+//Services & Repository
+builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddScoped<IPlayerService, PlayerService>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

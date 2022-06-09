@@ -29,6 +29,8 @@ namespace Infrastructure.Models
         [Range(PlayerConstants.HEIGHT_MIN, PlayerConstants.HEIGHT_MAX)]
         public int Height { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public string PreferredFoot { get; set; }
 
         public Position Position { get; set; }
