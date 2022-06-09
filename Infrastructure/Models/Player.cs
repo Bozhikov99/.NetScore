@@ -1,4 +1,6 @@
-﻿using Infrastructure.Models.Enums;
+﻿using Common.ValidationConstants;
+using Infrastructure.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infrastructure.Models
@@ -16,19 +18,25 @@ namespace Infrastructure.Models
 
         public string Id { get; set; }
 
+        [Required]
+        [MaxLength(PlayerConstants.NAME_MAXLENGTH)]
         public string FirstName { get; set; }
 
+        [Required]
+        [MaxLength(PlayerConstants.NAME_MAXLENGTH)]
         public string LastName { get; set; }
 
+        [Range(PlayerConstants.HEIGHT_MIN, PlayerConstants.HEIGHT_MAX)]
         public int Height { get; set; }
 
         public string PreferredFoot { get; set; }
 
         public Position Position { get; set; }
 
+        [Required]
         public string Country { get; set; }
 
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
         [ForeignKey(nameof(Team))]
         public string TeamId { get; set; }

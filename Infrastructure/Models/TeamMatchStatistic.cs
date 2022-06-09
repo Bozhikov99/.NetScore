@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,7 @@ namespace Infrastructure.Models
 
         public bool IsWinner { get; set; }
 
+        [Required]
         public string MatchCode { get; set; }
 
         [ForeignKey(nameof(Team))]
