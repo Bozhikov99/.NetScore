@@ -8,6 +8,8 @@ namespace Core.Services.Contracts
 
         Task Edit(EditPlayerModel model);
 
+        Task<EditPlayerModel> GetEditModel(string id);
+
         Task Delete(string id);
 
         Task<PlayerDetailsModel> Details(string id);

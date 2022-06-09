@@ -13,5 +13,7 @@ namespace Common.ValidationConstants
 
         public const int HEIGHT_MIN = 140;
         public const int HEIGHT_MAX = 215;
+
+        public static string[] POSITIONS = { "GoalKeeper", "Defender", "Midfielder", "Striker" };
     }
 }

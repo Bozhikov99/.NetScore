@@ -27,6 +27,9 @@ namespace Core.ViewModels.Player
         public string PreferredFoot { get; set; }
 
         [Required]
+        public string ImageUrl { get; set; }
+
+        [Required]
         public string Position { get; set; }
 
         [Required]
@@ -34,7 +37,5 @@ namespace Core.ViewModels.Player
 
         public DateTime? BirthDate { get; set; }
 
-        [Required]
-        public string TeamId { get; set; }
     }
 }

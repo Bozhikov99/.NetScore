@@ -1,3 +1,4 @@
+using Common;
 using Core.Mapping;
 using Core.Services;
 using Core.Services.Contracts;
@@ -6,6 +7,7 @@ using Infrastructure.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Web.ModelBinders.Providers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,12 +22,18 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 //Automapper Profiles
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<PlayerProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<TeamProfile>());
 
 //Services & Repository
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
+builder.Services.AddScoped<ITeamService, TeamService>();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+        .AddMvcOptions(options =>
+        {
+            options.ModelBinderProviders.Insert(1, new DateTimeModelBinderProvider(DateTimeFormatConstant.Format));
+        });
 
 var app = builder.Build();
 

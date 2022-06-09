@@ -38,6 +38,11 @@ namespace Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Team>()
+                .HasMany(t => t.Players)
+                .WithOne(p => p.Team)
+                .IsRequired(false);
+
             base.OnModelCreating(modelBuilder);
         }
     }

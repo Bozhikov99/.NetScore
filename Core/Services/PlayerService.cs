@@ -54,6 +54,14 @@ namespace Core.Services
             await repository.SaveChangesAsync();
         }
 
+        public async Task<EditPlayerModel> GetEditModel(string id)
+        {
+            Player player = await repository.GetByIdAsync<Player>(id);
+            EditPlayerModel model = mapper.Map<EditPlayerModel>(player);
+
+            return model;
+        }
+
         public async Task<IEnumerable<ListPlayerModel>> GetAll()
         {
             IEnumerable<ListPlayerModel> players = await repository.All<Player>()

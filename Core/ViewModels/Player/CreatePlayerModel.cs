@@ -29,11 +29,11 @@ namespace Core.ViewModels.Player
         public string Position { get; set; }
 
         [Required]
+        public string ImageUrl { get; set; }
+
+        [Required]
         public string Country { get; set; }
 
         public DateTime? BirthDate { get; set; }
-
-        [Required]
-        public string TeamId { get; set; }
     }
 }
