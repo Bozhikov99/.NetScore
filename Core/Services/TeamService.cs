@@ -22,7 +22,7 @@ namespace Core.Services
 
         public async Task<IEnumerable<ListTeamModel>> GetCompleteTeams()
         {
-            IEnumerable<ListTeamModel> teams = await repository.All<Team>(t => t.Players.Count >= 11 
+            IEnumerable<ListTeamModel> teams = await repository.All<Team>(t => t.Players.Count >= 11
             && t.Players.Any(p => p.Position == Position.GoalKeeper))
                 .ProjectTo<ListTeamModel>(mapper.ConfigurationProvider)
                 .ToArrayAsync();
@@ -42,6 +42,16 @@ namespace Core.Services
 
         public async Task Delete(string id)
         {
+            Player[] players = await repository.All<Player>(p => p.TeamId == id)
+                .ToArrayAsync();
+
+            foreach (Player player in players)
+            {
+                player.TeamId = null;
+            }
+
+            repository.UpdateRange(players);
+
             await repository.DeleteAsync<Team>(id);
             await repository.SaveChangesAsync();
         }

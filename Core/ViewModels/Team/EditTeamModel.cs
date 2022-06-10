@@ -20,7 +20,5 @@ namespace Core.ViewModels.Team
 
         [Required]
         public string Color { get; set; }
-
-        public string[]? PlayerIds { get; set; }
     }
 }
