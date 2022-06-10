@@ -51,6 +51,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Details(string id)
         {
             TeamDetailsModel details = await teamService.Details(id);
+            ViewBag.TeamId = id;
 
             return View(details);
         }
@@ -114,14 +115,14 @@ namespace Web.Controllers
         {
             await teamService.AddToSquad(playerIds, teamId);
 
-            return RedirectToAction(nameof(Squad), teamId);
+            return RedirectToAction(nameof(Squad), new { id = teamId });
         }
 
         public async Task<IActionResult> RemovePlayer(string teamId, string playerId)
         {
             await teamService.RemovePlayer(teamId, playerId);
 
-            return RedirectToAction(nameof(Squad), teamId);
+            return RedirectToAction(nameof(Squad), new { id = teamId });
         }
     }
 }
