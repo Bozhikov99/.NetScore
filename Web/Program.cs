@@ -23,11 +23,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 //Automapper Profiles
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<PlayerProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<TeamProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<TournamentProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<FixtureProfile>());
 
 //Services & Repository
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddScoped<ITournamentService, TournamentService>();
 
 builder.Services.AddControllersWithViews()
         .AddMvcOptions(options =>
