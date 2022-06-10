@@ -23,6 +23,6 @@ namespace Core.Services.Contracts
 
         Task RemovePlayer(string teamId, string playerId);
 
-        Task AddPlayer(string teamId, string playerId);
+        Task AddToSquad(string[] playerIds, string teamId);
     }
 }

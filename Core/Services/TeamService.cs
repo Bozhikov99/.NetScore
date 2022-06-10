@@ -19,32 +19,27 @@ namespace Core.Services
             this.mapper = mapper;
         }
 
-        public async Task AddPlayer(string teamId, string playerId)
-        {
-            Team team = await repository.GetByIdAsync<Team>(teamId);
-            Player player = await repository.GetByIdAsync<Player>(playerId);
+        //public async Task AddPlayer(string teamId, string playerId)
+        //{
+        //    Team team = await repository.GetByIdAsync<Team>(teamId);
+        //    Player player = await repository.GetByIdAsync<Player>(playerId);
 
-            ArgumentNullException.ThrowIfNull(player, "x");
-            ArgumentNullException.ThrowIfNull(team, "x");
+        //    ArgumentNullException.ThrowIfNull(player, "x");
+        //    ArgumentNullException.ThrowIfNull(team, "x");
 
-            team.Players.Add(player);
-            player.Team = team;
+        //    team.Players.Add(player);
+        //    player.Team = team;
 
-            repository.Update(player);
-            repository.Update(team);
-            await repository.SaveChangesAsync();
-        }
+        //    repository.Update(player);
+        //    repository.Update(team);
+        //    await repository.SaveChangesAsync();
+        //}
 
         public async Task Create(CreateTeamModel model)
         {
             Team team = mapper.Map<Team>(model);
 
-            foreach (string playerId in model.PlayerIds)
-            {
-                Player currentPlayer = await repository.GetByIdAsync<Player>(playerId);
-                currentPlayer.Team = team;
-                team.Players.Add(currentPlayer);
-            }
+            await TransferPlayers(team, model.PlayerIds);
 
             await repository.AddAsync(team);
             await repository.SaveChangesAsync();
@@ -102,6 +97,26 @@ namespace Core.Services
             repository.Update(player);
             repository.Update(team);
             await repository.SaveChangesAsync();
+        }
+
+        public async Task AddToSquad(string[] playerIds, string teamId)
+        {
+            Team team = await repository.GetByIdAsync<Team>(teamId);
+
+            await TransferPlayers(team, playerIds);
+
+            repository.Update(team);
+            await repository.SaveChangesAsync();
+        }
+
+        private async Task TransferPlayers(Team team, string[] playerIds)
+        {
+            foreach (string playerId in playerIds)
+            {
+                Player currentPlayer = await repository.GetByIdAsync<Player>(playerId);
+                currentPlayer.Team = team;
+                team.Players.Add(currentPlayer);
+            }
         }
     }
 }

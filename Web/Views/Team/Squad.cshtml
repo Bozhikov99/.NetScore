@@ -1,0 +1,50 @@
+﻿@using Core.ViewModels.Player
+@model IEnumerable<ListPlayerModel>
+
+@{
+    ViewData["Title"] = "Squad";
+}
+
+<h1>Squad</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageUrl)
+            </td>
+            <td>
+                <a asp-action="RemovePlayer" 
+                    asp-route-playerId="@item.Id"
+                    asp-route-teamId="@ViewBag.TeamId">
+                    Delete
+                </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

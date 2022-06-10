@@ -15,5 +15,9 @@ namespace Core.Services.Contracts
         Task<PlayerDetailsModel> Details(string id);
 
         Task<IEnumerable<ListPlayerModel>> GetAll();
+
+        Task<IEnumerable<ListPlayerModel>> GetAll(string teamId);
+
+        Task<IEnumerable<ListPlayerModel>> GetFreeAgents();
     }
 }

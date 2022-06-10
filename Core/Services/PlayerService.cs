@@ -70,5 +70,23 @@ namespace Core.Services
 
             return players;
         }
+        public async Task<IEnumerable<ListPlayerModel>> GetAll(string teamId)
+        {
+            IEnumerable<ListPlayerModel> players = await repository.All<Player>(p => p.TeamId == teamId)
+                .ProjectTo<ListPlayerModel>(mapper.ConfigurationProvider)
+                .ToArrayAsync();
+
+            return players;
+        }
+
+        public async Task<IEnumerable<ListPlayerModel>> GetFreeAgents()
+        {
+            IEnumerable<ListPlayerModel> players = await repository.All<Player>(p => p.TeamId == null)
+                .ProjectTo<ListPlayerModel>(mapper.ConfigurationProvider)
+                .ToArrayAsync();
+
+            return players;
+        }
+
     }
 }

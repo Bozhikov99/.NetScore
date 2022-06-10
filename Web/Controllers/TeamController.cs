@@ -25,7 +25,7 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Create()
         {
-            IEnumerable<ListPlayerModel> players = await playerService.GetAll();
+            IEnumerable<ListPlayerModel> players = await playerService.GetFreeAgents();
             ViewBag.Players = players;
 
             return View();
@@ -40,11 +40,27 @@ namespace Web.Controllers
             return View(team);
         }
 
+        public async Task<IActionResult> AddPlayers(string id)
+        {
+            IEnumerable<ListPlayerModel> players = await playerService.GetFreeAgents();
+            ViewBag.TeamId = id;
+
+            return View(players);
+        }
+
         public async Task<IActionResult> Details(string id)
         {
             TeamDetailsModel details = await teamService.Details(id);
 
             return View(details);
+        }
+
+        public async Task<IActionResult> Squad(string id)
+        {
+            IEnumerable<ListPlayerModel> players = await playerService.GetAll(id);
+            ViewBag.TeamId = id;
+
+            return View(players);
         }
 
         public async Task<IActionResult> Delete(string id)
@@ -91,6 +107,21 @@ namespace Web.Controllers
             }
 
             return RedirectToAction(nameof(All));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPlayers(string[] playerIds, string teamId)
+        {
+            await teamService.AddToSquad(playerIds, teamId);
+
+            return RedirectToAction(nameof(Squad), teamId);
+        }
+
+        public async Task<IActionResult> RemovePlayer(string teamId, string playerId)
+        {
+            await teamService.RemovePlayer(teamId, playerId);
+
+            return RedirectToAction(nameof(Squad), teamId);
         }
     }
 }
