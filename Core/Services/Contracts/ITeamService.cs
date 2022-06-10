@@ -1,9 +1,4 @@
 ﻿using Core.ViewModels.Team;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Services.Contracts
 {
@@ -24,5 +19,7 @@ namespace Core.Services.Contracts
         Task RemovePlayer(string teamId, string playerId);
 
         Task AddToSquad(string[] playerIds, string teamId);
+
+        Task<IEnumerable<ListTeamModel>> GetCompleteTeams();
     }
 }

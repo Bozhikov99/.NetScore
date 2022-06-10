@@ -14,17 +14,19 @@ namespace Infrastructure
         {
         }
 
-        public DbSet<Team> Teams { get; set; }
+        public virtual DbSet<Team> Teams { get; set; }
 
-        public DbSet<Player> Players { get; set; }
+        public virtual DbSet<Player> Players { get; set; }
 
-        public DbSet<Tournament> Tournaments { get; set; }
+        public virtual DbSet<Fixture> Fixtures { get; set; }
 
-        public DbSet<User> Users { get; set; }
+        public virtual DbSet<Tournament> Tournaments { get; set; }
 
-        public DbSet<PlayerMatchStatistic> PlayerMatchStatistics { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
-        public DbSet<TeamMatchStatistic> TeamMatchStatistics { get; set; }
+        public virtual DbSet<PlayerMatchStatistic> PlayerMatchStatistics { get; set; }
+
+        public virtual DbSet<TeamMatchStatistic> TeamMatchStatistics { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -38,10 +40,25 @@ namespace Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Team>()
-                .HasMany(t => t.Players)
+            modelBuilder.Entity<Team>(e =>
+            {
+                e.HasMany(t => t.Players)
                 .WithOne(p => p.Team)
                 .IsRequired(false);
+            });
+
+            modelBuilder.Entity<Fixture>(e =>
+            {
+                e.HasOne(f => f.AwayTeam)
+                .WithMany(t => t.AwayFixtures)
+                .HasForeignKey(f => f.AwayTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                e.HasOne(f => f.HomeTeam)
+                .WithMany(t => t.HomeFixtures)
+                .HasForeignKey(f => f.HomeTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
 
             base.OnModelCreating(modelBuilder);
         }

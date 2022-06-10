@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Infrastructure.Models
 {
     public class User
     {
@@ -11,6 +13,7 @@
             FavoriteTeams = new List<Team>();
         }
 
+        [Key]
         public string Id { get; set; }
 
         public virtual ICollection<Team> FavoriteTeams { get; set; }

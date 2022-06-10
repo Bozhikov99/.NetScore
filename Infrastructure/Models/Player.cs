@@ -16,6 +16,7 @@ namespace Infrastructure.Models
             Statistics = new List<PlayerMatchStatistic>();
         }
 
+        [Key]
         public string Id { get; set; }
 
         [Required]

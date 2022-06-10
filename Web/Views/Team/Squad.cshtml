@@ -3,6 +3,13 @@
 
 @{
     ViewData["Title"] = "Squad";
+    ListPlayerModel[] players = Model.ToArray();
+    ListPlayerModel[] defenders = players.Where(p => p.Position == "Defender").ToArray();
+    ListPlayerModel[] strikers = players.Where(p => p.Position == "Striker").ToArray();
+    ListPlayerModel[] midfielders = players.Where(p => p.Position == "Midfielder").ToArray();
+    ListPlayerModel[] goalkeepers = players.Where(p => p.Position == "GoalKeeper").ToArray();
+
+
 }
 
 <h1>Squad</h1>
@@ -10,46 +17,182 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageUrl)
-            </td>
-            <td>
-                <a asp-action="RemovePlayer" 
-                    asp-route-playerId="@item.Id"
-                    asp-route-teamId="@ViewBag.TeamId">
-                    Delete
-                </a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
 
-<a asp-action="AddPlayers" 
-asp-route-id="@ViewBag.TeamId">
+@if (goalkeepers.Length > 0)
+{
+    <h2>Keepers</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImageUrl)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in goalkeepers)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => m.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => m.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => m.ImageUrl)
+                    </td>
+                    <td>
+                        <a asp-action="RemovePlayer"
+                   asp-route-playerId="@m.Id"
+                   asp-route-teamId="@ViewBag.TeamId">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@if (defenders.Length > 0)
+{
+    <h2>Defenders</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImageUrl)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var d in defenders)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => d.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => d.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => d.ImageUrl)
+                    </td>
+                    <td>
+                        <a asp-action="RemovePlayer"
+                   asp-route-playerId="@d.Id"
+                   asp-route-teamId="@ViewBag.TeamId">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@if (midfielders.Length > 0)
+{
+    <h2>Midfielders</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImageUrl)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in midfielders)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => m.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => m.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => m.ImageUrl)
+                    </td>
+                    <td>
+                        <a asp-action="RemovePlayer"
+                   asp-route-playerId="@m.Id"
+                   asp-route-teamId="@ViewBag.TeamId">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@if (strikers.Length > 0)
+{
+    <h2>Strikers</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImageUrl)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in strikers)
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => s.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => s.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => s.ImageUrl)
+                    </td>
+                    <td>
+                        <a asp-action="RemovePlayer"
+                   asp-route-playerId="@s.Id"
+                   asp-route-teamId="@ViewBag.TeamId">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-action="AddPlayers"
+   asp-route-id="@ViewBag.TeamId">
     <button>Add Players</button>
 </a>

@@ -12,6 +12,6 @@ namespace Core.ViewModels.Player
 
         public string ImageUrl { get; set; }
 
-        public Position Position { get; set; }
+        public string Position { get; set; }
     }
 }

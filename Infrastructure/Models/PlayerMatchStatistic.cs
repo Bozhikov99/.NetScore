@@ -16,6 +16,7 @@ namespace Infrastructure.Models
                 .ToString();
         }
 
+        [Key]
         public string Id { get; set; }
 
         public int Goals { get; set; }

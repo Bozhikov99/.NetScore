@@ -18,6 +18,7 @@ namespace Infrastructure.Models
             PlayerMatchStatistics = new List<PlayerMatchStatistic>();
         }
 
+        [Key]
         public string Id { get; set; }
 
         public bool IsWinner { get; set; }

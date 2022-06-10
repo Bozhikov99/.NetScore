@@ -16,8 +16,12 @@ namespace Infrastructure.Models
                 .ToString();
 
             Teams = new List<Team>();
+
+            TeamMatchStatistics = new List<TeamMatchStatistic>();
+            Fixtures = new List<Fixture>();
         }
 
+        [Key]
         public string Id { get; set; }
 
         [Required]
@@ -29,5 +33,7 @@ namespace Infrastructure.Models
         public virtual ICollection<Team> Teams { get; set; }
 
         public virtual ICollection<TeamMatchStatistic> TeamMatchStatistics { get; set; }
+
+        public virtual ICollection<Fixture> Fixtures { get; set; }
     }
 }

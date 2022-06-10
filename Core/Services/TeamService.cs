@@ -4,6 +4,7 @@ using Core.Services.Contracts;
 using Core.ViewModels.Team;
 using Infrastructure.Common;
 using Infrastructure.Models;
+using Infrastructure.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Services
@@ -19,21 +20,15 @@ namespace Core.Services
             this.mapper = mapper;
         }
 
-        //public async Task AddPlayer(string teamId, string playerId)
-        //{
-        //    Team team = await repository.GetByIdAsync<Team>(teamId);
-        //    Player player = await repository.GetByIdAsync<Player>(playerId);
+        public async Task<IEnumerable<ListTeamModel>> GetCompleteTeams()
+        {
+            IEnumerable<ListTeamModel> teams = await repository.All<Team>(t => t.Players.Count >= 11 
+            && t.Players.Any(p => p.Position == Position.GoalKeeper))
+                .ProjectTo<ListTeamModel>(mapper.ConfigurationProvider)
+                .ToArrayAsync();
 
-        //    ArgumentNullException.ThrowIfNull(player, "x");
-        //    ArgumentNullException.ThrowIfNull(team, "x");
-
-        //    team.Players.Add(player);
-        //    player.Team = team;
-
-        //    repository.Update(player);
-        //    repository.Update(team);
-        //    await repository.SaveChangesAsync();
-        //}
+            return teams;
+        }
 
         public async Task Create(CreateTeamModel model)
         {

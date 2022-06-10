@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(NetScoreDbContext))]
-    partial class NetScoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220610140010_AddingFixtures")]
+    partial class AddingFixtures
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,8 +287,8 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Infrastructure.Models.Tournament", "Tournament")
-                        .WithMany("Fixtures")
+                    b.HasOne("Infrastructure.Models.Team", "Tournament")
+                        .WithMany()
                         .HasForeignKey("TournamentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -409,8 +411,6 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.Models.Tournament", b =>
                 {
-                    b.Navigation("Fixtures");
-
                     b.Navigation("TeamMatchStatistics");
                 });
 #pragma warning restore 612, 618
