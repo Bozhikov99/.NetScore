@@ -34,12 +34,13 @@ namespace Web.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Schedule(CreateFixtureModel[] schedule)
+        public async Task<IActionResult> Schedule(string id)
         {
-            string tournamentId = schedule.First().TournamentId;
-            await tournamentService.Schedule(schedule);
+            IEnumerable<ListTeamModel> teams = await teamService.GetTeamsForTournament(id);
+            ViewBag.Teams = teams;
+            ViewBag.TournamentId = id;
 
-            return RedirectToAction(nameof(Details), new { tournamentId });
+            return View();
         }
 
         public async Task<IActionResult> Details(string id)
@@ -48,6 +49,7 @@ namespace Web.Controllers
             IEnumerable<ListTeamModel> teams = await teamService.GetTeamsForTournament(id);
 
             ViewBag.Teams = teams;
+            ViewBag.Fixtures = teams.Count() / 2;
             ViewBag.TournamentId = id;
 
             return View(details);
@@ -66,6 +68,15 @@ namespace Web.Controllers
             await tournamentService.Create(model);
 
             return RedirectToAction(nameof(All));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Schedule(CreateFixtureModel[] schedule)
+        {
+            string tournamentId = schedule.First().TournamentId;
+            await tournamentService.Schedule(schedule);
+
+            return RedirectToAction(nameof(Details), new { tournamentId });
         }
     }
 }

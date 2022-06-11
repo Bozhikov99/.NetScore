@@ -4,8 +4,7 @@
 
 @{
     ViewData["Title"] = "Details";
-    ListTeamModel[] teams = ViewBag.Teams
-        .ToArray();
+    IEnumerable<ListTeamModel> teams = ViewBag.Teams;
 }
 
 <h1>Details</h1>
@@ -29,6 +28,12 @@
         </div>
     }
 </div>
+
+@if (!Model.IsScheduled)
+{
+    <a asp-action="Schedule" asp-route-id=@Model.Id >Schedule</a>
+}
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>

@@ -1,0 +1,61 @@
+﻿@using Core.ViewModels.Team
+@model IEnumerable<ListTeamModel>
+
+@{
+    ViewData["Title"] = "Schedule";
+    int fixtureCount = Enumerable.Count(ViewBag.Teams) / 2;
+}
+
+<h1>Schedule</h1>
+@for (int i = 0; i < fixtureCount; i++)
+{
+    <div class="fixture-div" style="border: 1px solid black">
+        <select id="HomeTeamId">
+            @foreach (var t in ViewBag.Teams)
+            {
+                <option value=@t.Id>@t.Name</option>
+            }
+        </select>
+        <select id="AwayTeamId">
+            @foreach (var t in ViewBag.Teams)
+            {
+                <option value=@t.Id>@t.Name</option>
+            }
+        </select>
+        <input id="TournamentId" hidden value=@ViewBag.TournamentId />
+    </div>
+}
+<button id="submit-fixtures" type="submit">s</button>
+
+<script type="text/javascript">
+    let fixtureDivElements=document.querySelectorAll('.fixture-div');
+    let submitButtonElement=document.querySelector('#submit-fixtures');
+    let fixtureArray=[];
+
+    submitButtonElement.addEventListener('click', ()=>{
+        fixtureDivElements.forEach(fde=>{
+            let HomeTeamId=fde.querySelector('#HomeTeamId')
+                .value;
+
+            let AwayTeamId=fde.querySelector('#AwayTeamId')
+                .value;
+
+            let TournamentId=fde.querySelector('#TournamentId')
+                .value;
+
+            let fixtureObject={
+                HomeTeamId,
+                AwayTeamId,
+                TournamentId
+            }
+
+            fixtureArray.push(fixtureObject);
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Schedule")",
+            data: { schedule: fixtureArray}
+            });
+    });
+</script>

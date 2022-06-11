@@ -83,9 +83,9 @@ namespace Core.Services
 
         public async Task<IEnumerable<ListTeamModel>> GetTeamsForTournament(string id)
         {
-            var tournament = repository.All<Tournament>()
+            var tournament = await repository.All<Tournament>()
                 .Include(t=>t.Teams)
-                .First(t=>t.Id==id);
+                .FirstAsync(t=>t.Id==id);
 
             IEnumerable<ListTeamModel> teams = tournament.Teams
                 .AsQueryable()
