@@ -29,11 +29,32 @@
     }
 </div>
 
+
 @if (!Model.IsScheduled)
 {
-    <a asp-action="Schedule" asp-route-id=@Model.Id >Schedule</a>
+    <a asp-action="Schedule" asp-route-id=@Model.Id>Schedule</a>
 }
-
+else
+{
+    @foreach (var f in ViewBag.Fixtures)
+    {
+        ListTeamModel home = teams.First(t => t.Id == f.HomeTeamId);
+        ListTeamModel away = teams.First(t => t.Id == f.AwayTeamId);
+        <div class="row">
+            <div class="col" style="background-color">
+                <h2>@home.Name</h2>
+            </div>
+            <div class="col">
+                <a asp-action="LineUp" asp-route-teamId=@home.Id asp-route-awayId=@away.Id>
+                <button>Play Match</button>
+                </a>
+            </div>
+            <div class="col" style="background-color">
+                <h2>@away.Name</h2>
+            </div>
+        </div>
+    }
+}
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>

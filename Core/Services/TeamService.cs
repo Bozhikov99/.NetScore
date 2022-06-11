@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Core.Services.Contracts;
+using Core.ViewModels.Player;
 using Core.ViewModels.Team;
 using Infrastructure.Common;
 using Infrastructure.Models;
@@ -84,14 +85,23 @@ namespace Core.Services
         public async Task<IEnumerable<ListTeamModel>> GetTeamsForTournament(string id)
         {
             var tournament = await repository.All<Tournament>()
-                .Include(t=>t.Teams)
-                .FirstAsync(t=>t.Id==id);
+                .Include(t => t.Teams)
+                .FirstAsync(t => t.Id == id);
 
             IEnumerable<ListTeamModel> teams = tournament.Teams
                 .AsQueryable()
                 .ProjectTo<ListTeamModel>(mapper.ConfigurationProvider);
 
             return teams;
+        }
+
+        public async Task<IEnumerable<ListPlayerModel>> GetPlayers(string id)
+        {
+            IEnumerable<ListPlayerModel> players = await repository.All<Player>()
+                .ProjectTo<ListPlayerModel>(mapper.ConfigurationProvider)
+                .ToArrayAsync();
+
+            return players;
         }
 
         public async Task<EditTeamModel> GetEditModel(string id)

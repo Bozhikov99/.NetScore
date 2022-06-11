@@ -1,5 +1,6 @@
 ﻿using Core.Services.Contracts;
 using Core.ViewModels.Fixture;
+using Core.ViewModels.Player;
 using Core.ViewModels.Team;
 using Core.ViewModels.Tournament;
 using Microsoft.AspNetCore.Mvc;
@@ -43,13 +44,24 @@ namespace Web.Controllers
             return View();
         }
 
+        public async Task<IActionResult> LineUp(string homeId, string awayId)
+        {
+            IEnumerable<ListPlayerModel> homePlayers = await teamService.GetPlayers(homeId);
+            IEnumerable<ListPlayerModel> awayPlayers = await teamService.GetPlayers(awayId);
+            ViewBag.HomePlayers = homePlayers;
+            ViewBag.AwayPlayers = awayPlayers;
+
+            return View();
+        }
+
         public async Task<IActionResult> Details(string id)
         {
             TournamentDetailsModel details = await tournamentService.GetDetails(id);
             IEnumerable<ListTeamModel> teams = await teamService.GetTeamsForTournament(id);
+            IEnumerable<ListFixtureModel> fixtures = await tournamentService.GetFixtures(id);
 
             ViewBag.Teams = teams;
-            ViewBag.Fixtures = teams.Count() / 2;
+            ViewBag.Fixtures = fixtures;
             ViewBag.TournamentId = id;
 
             return View(details);
@@ -73,20 +85,20 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Schedule(CreateFixtureModel[] schedule)
         {
-            string tournamentId = schedule.First().TournamentId;
 
             if (!ModelState.IsValid)
             {
-                //IEnumerable<ListTeamModel> teams = await teamService.GetTeamsForTournament(tournamentId);
-                //ViewBag.Teams = teams;
-                //ViewBag.TournamentId = tournamentId;
-
-                //return View();
                 throw new ArgumentNullException("Empty fixture");
             }
             await tournamentService.Schedule(schedule);
 
             return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LineUp(string[] homeIds, string[] awayIds)
+        {
+            return View();
         }
     }
 }

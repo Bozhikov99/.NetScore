@@ -14,5 +14,7 @@ namespace Core.Services.Contracts
         Task<IEnumerable<ListTournamentModel>> GetAll();
 
         Task<TournamentDetailsModel> GetDetails(string id);
+
+        Task<IEnumerable<ListFixtureModel>> GetFixtures(string id);
     }
 }

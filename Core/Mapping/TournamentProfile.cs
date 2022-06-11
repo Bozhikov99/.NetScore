@@ -17,7 +17,8 @@ namespace Core.Mapping
 
             CreateMap<Tournament, ListTournamentModel>();
 
-            CreateMap<Tournament, TournamentDetailsModel>();
+            CreateMap<Tournament, TournamentDetailsModel>()
+                .ForMember(d => d.IsScheduled, s => s.MapFrom(t => t.Fixtures.Count > 0));
         }
     }
 }

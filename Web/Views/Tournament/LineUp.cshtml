@@ -1,0 +1,20 @@
+﻿@using Core.ViewModels.Player
+
+@{
+    IEnumerable<ListPlayerModel> homePlayers = ViewBag.HomePlayers;
+    IEnumerable<ListPlayerModel> awayPlayers = ViewBag.AwayPlayers;
+}
+
+<div>
+    @foreach (ListPlayerModel p in homePlayers)
+    {
+        <h2>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h2>
+    }
+</div>
+
+<div>
+    @foreach (ListPlayerModel p in awayPlayers)
+    {
+        <h2>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h2>
+    }
+</div>

@@ -1,4 +1,5 @@
-﻿using Core.ViewModels.Team;
+﻿using Core.ViewModels.Player;
+using Core.ViewModels.Team;
 
 namespace Core.Services.Contracts
 {
@@ -13,6 +14,8 @@ namespace Core.Services.Contracts
         Task<IEnumerable<ListTeamModel>> GetAll();
 
         Task<IEnumerable<ListTeamModel>> GetTeamsForTournament(string id);
+
+        Task<IEnumerable<ListPlayerModel>> GetPlayers(string id);
 
         Task<EditTeamModel> GetEditModel(string id);
 

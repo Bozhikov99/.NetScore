@@ -1,4 +1,5 @@
 ﻿using Core.Services.Contracts;
+using Core.ViewModels.Fixture;
 using Core.ViewModels.Player;
 using Core.ViewModels.Team;
 using Microsoft.AspNetCore.Mvc;

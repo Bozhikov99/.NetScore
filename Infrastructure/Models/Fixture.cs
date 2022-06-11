@@ -9,10 +9,16 @@ namespace Infrastructure.Models
         {
             Id = Guid.NewGuid()
                 .ToString();
+
+            MatchCode = Guid.NewGuid()
+                .ToString();
         }
 
         [Key]
         public string Id { get; set; }
+
+        [Required]
+        public string MatchCode { get; set; }
 
         [Required]
         [ForeignKey(nameof(HomeTeam))]

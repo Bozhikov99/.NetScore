@@ -64,10 +64,22 @@ namespace Core.Services
 
         public async Task<TournamentDetailsModel> GetDetails(string id)
         {
-            Tournament tournament = await repository.GetByIdAsync<Tournament>(id);
+            var tournament = await repository.All<Tournament>()
+                .Include(t => t.Fixtures)
+                .FirstAsync(t => t.Id == id);
+
             TournamentDetailsModel details = mapper.Map<TournamentDetailsModel>(tournament);
 
             return details;
+        }
+
+        public async Task<IEnumerable<ListFixtureModel>> GetFixtures(string id)
+        {
+            IEnumerable<ListFixtureModel> fixtures = await repository.All<Fixture>(f => f.TournamentId == id)
+                .ProjectTo<ListFixtureModel>(mapper.ConfigurationProvider)
+                .ToArrayAsync();
+
+            return fixtures;
         }
 
         public async Task<bool> IsScheduled(string id)
