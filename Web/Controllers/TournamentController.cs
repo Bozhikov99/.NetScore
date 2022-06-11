@@ -74,9 +74,19 @@ namespace Web.Controllers
         public async Task<IActionResult> Schedule(CreateFixtureModel[] schedule)
         {
             string tournamentId = schedule.First().TournamentId;
+
+            if (!ModelState.IsValid)
+            {
+                //IEnumerable<ListTeamModel> teams = await teamService.GetTeamsForTournament(tournamentId);
+                //ViewBag.Teams = teams;
+                //ViewBag.TournamentId = tournamentId;
+
+                //return View();
+                throw new ArgumentNullException("Empty fixture");
+            }
             await tournamentService.Schedule(schedule);
 
-            return RedirectToAction(nameof(Details), new { tournamentId });
+            return Ok();
         }
     }
 }

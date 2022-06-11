@@ -10,13 +10,17 @@
 @for (int i = 0; i < fixtureCount; i++)
 {
     <div class="fixture-div" style="border: 1px solid black">
+        <a class="clear-home">x</a>
         <select id="HomeTeamId">
+            <option disabled selected>Choose team</option>
             @foreach (var t in ViewBag.Teams)
             {
                 <option value=@t.Id>@t.Name</option>
             }
         </select>
+        <a class="clear-away">x</a>
         <select id="AwayTeamId">
+            <option disabled selected>Choose team</option>
             @foreach (var t in ViewBag.Teams)
             {
                 <option value=@t.Id>@t.Name</option>
@@ -27,35 +31,48 @@
 }
 <button id="submit-fixtures" type="submit">s</button>
 
+<script type="module" src="~/js/schedule.js"></script>
+
 <script type="text/javascript">
-    let fixtureDivElements=document.querySelectorAll('.fixture-div');
-    let submitButtonElement=document.querySelector('#submit-fixtures');
-    let fixtureArray=[];
+        let fixtureDivElements=document.querySelectorAll('.fixture-div');
+        let submitButtonElement=document.querySelector('#submit-fixtures');
+        let selectElements=Array.from(document.querySelector('select'));
+        let fixtureArray=[];
 
-    submitButtonElement.addEventListener('click', ()=>{
-        fixtureDivElements.forEach(fde=>{
-            let HomeTeamId=fde.querySelector('#HomeTeamId')
-                .value;
+        submitButtonElement.addEventListener('click', ()=>{
+            if(selectElements.every(se=>se.value)){
+            fixtureDivElements.forEach(fde=>{
+                let HomeTeamId=fde.querySelector('#HomeTeamId')
+                    .value;
 
-            let AwayTeamId=fde.querySelector('#AwayTeamId')
-                .value;
+                let AwayTeamId=fde.querySelector('#AwayTeamId')
+                    .value;
 
-            let TournamentId=fde.querySelector('#TournamentId')
-                .value;
+                let TournamentId=fde.querySelector('#TournamentId')
+                    .value;
 
-            let fixtureObject={
-                HomeTeamId,
-                AwayTeamId,
-                TournamentId
-            }
+                let fixtureObject={
+                    HomeTeamId,
+                    AwayTeamId,
+                    TournamentId
+                }
 
-            fixtureArray.push(fixtureObject);
-        });
-
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("Schedule")",
-            data: { schedule: fixtureArray}
+                fixtureArray.push(fixtureObject);
             });
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Schedule")",
+                data: { schedule: fixtureArray}
+                })
+                .done(()=>{
+                    let id='@ViewBag.TournamentId';
+                    window.location=`https://localhost:44368/Tournament/Details/${id}`; 
+                })
+                .fail(()=>{
+                    let id='@ViewBag.TournamentId';
+                    window.location=`https://localhost:44368/Tournament/Schedule/${id}`; 
+                })
+            }
     });
 </script>
