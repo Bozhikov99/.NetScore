@@ -29,7 +29,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Create()
         {
             IEnumerable<ListTeamModel> teams = await teamService.GetCompleteTeams();
-            ViewBag.Teams=teams;
+            ViewBag.Teams = teams;
 
             return View();
         }
@@ -44,8 +44,13 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Details(string id)
         {
+            TournamentDetailsModel details = await tournamentService.GetDetails(id);
+            IEnumerable<ListTeamModel> teams = await teamService.GetTeamsForTournament(id);
 
-            return Ok();
+            ViewBag.Teams = teams;
+            ViewBag.TournamentId = id;
+
+            return View(details);
         }
 
         [HttpPost]

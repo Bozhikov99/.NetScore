@@ -81,6 +81,19 @@ namespace Core.Services
             return teams;
         }
 
+        public async Task<IEnumerable<ListTeamModel>> GetTeamsForTournament(string id)
+        {
+            var tournament = repository.All<Tournament>()
+                .Include(t=>t.Teams)
+                .First(t=>t.Id==id);
+
+            IEnumerable<ListTeamModel> teams = tournament.Teams
+                .AsQueryable()
+                .ProjectTo<ListTeamModel>(mapper.ConfigurationProvider);
+
+            return teams;
+        }
+
         public async Task<EditTeamModel> GetEditModel(string id)
         {
             Team team = await repository.GetByIdAsync<Team>(id);
@@ -113,6 +126,7 @@ namespace Core.Services
             repository.Update(team);
             await repository.SaveChangesAsync();
         }
+
 
         private async Task TransferPlayers(Team team, string[] playerIds)
         {

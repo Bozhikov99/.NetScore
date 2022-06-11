@@ -18,9 +18,7 @@ namespace Core.Mapping
             CreateMap<Team, TeamDetailsModel>()
                 .ForMember(d => d.Fans, s => s.MapFrom(t => t.Fans.Count))
                 .ForMember(d => d.Wins, s => s.MapFrom(t => t.TeamMatchStatistics.Where(m => m.IsWinner == true).Count()))
-                .ForMember(d => d.Wins, s => s.MapFrom(t => t.TeamMatchStatistics.Where(m => m.IsWinner == false).Count()));
-
-
+                .ForMember(d => d.Losses, s => s.MapFrom(t => t.TeamMatchStatistics.Where(m => m.IsWinner == false).Count()));
         }
     }
 }

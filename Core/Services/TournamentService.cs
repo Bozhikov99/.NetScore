@@ -62,6 +62,14 @@ namespace Core.Services
             await repository.SaveChangesAsync();
         }
 
+        public async Task<TournamentDetailsModel> GetDetails(string id)
+        {
+            Tournament tournament = await repository.GetByIdAsync<Tournament>(id);
+            TournamentDetailsModel details = mapper.Map<TournamentDetailsModel>(tournament);
+
+            return details;
+        }
+
         public async Task<bool> IsScheduled(string id)
         {
             Tournament tournament = await repository.GetByIdAsync<Tournament>(id);

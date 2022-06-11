@@ -1,0 +1,35 @@
+﻿@using Core.ViewModels.Tournament
+@using Core.ViewModels.Team
+@model TournamentDetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    ListTeamModel[] teams = ViewBag.Teams
+        .ToArray();
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Tournament</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+    @foreach (ListTeamModel t in teams)
+    {
+        <div style="background-color: @t.Color">
+            <img src=@t.LogoUrl />
+            <h3>@t.Name</h3>
+        </div>
+    }
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

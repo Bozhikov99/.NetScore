@@ -16,6 +16,8 @@ namespace Core.Mapping
             CreateMap<CreateTournamentModel, Tournament>();
 
             CreateMap<Tournament, ListTournamentModel>();
+
+            CreateMap<Tournament, TournamentDetailsModel>();
         }
     }
 }
