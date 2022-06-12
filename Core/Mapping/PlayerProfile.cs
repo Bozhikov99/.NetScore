@@ -22,7 +22,9 @@ namespace Core.Mapping
                 .ForMember(d => d.Tackles, s => s.MapFrom(p => p.Statistics.Select(stat => stat.Tackles).Sum()))
                 .ForMember(d => d.Fans, s => s.MapFrom(p => p.Fans.Count()));
 
-            CreateMap<Player, ListPlayerModel>();
+            CreateMap<Player, ListPlayerModel>()
+                .ForMember(d => d.Team, s => s.MapFrom(p => p.Team.Name))
+                .ForMember(d => d.TeamImageUrl, s => s.MapFrom(p => p.Team.LogoUrl));
         }
     }
 }

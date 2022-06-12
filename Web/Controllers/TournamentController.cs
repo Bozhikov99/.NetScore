@@ -11,13 +11,16 @@ namespace Web.Controllers
     {
         private readonly ITournamentService tournamentService;
         private readonly ITeamService teamService;
+        private readonly IPlayerService playerService;
 
         public TournamentController(
             ITournamentService tournamentService,
-            ITeamService teamService)
+            ITeamService teamService,
+            IPlayerService playerService)
         {
             this.tournamentService = tournamentService;
             this.teamService = teamService;
+            this.playerService = playerService;
         }
 
         public async Task<IActionResult> All()
@@ -44,15 +47,6 @@ namespace Web.Controllers
             return View();
         }
 
-        public async Task<IActionResult> LineUp(string homeId, string awayId)
-        {
-            IEnumerable<ListPlayerModel> homePlayers = await teamService.GetPlayers(homeId);
-            IEnumerable<ListPlayerModel> awayPlayers = await teamService.GetPlayers(awayId);
-            ViewBag.HomePlayers = homePlayers;
-            ViewBag.AwayPlayers = awayPlayers;
-
-            return View();
-        }
 
         public async Task<IActionResult> Details(string id)
         {
@@ -62,10 +56,27 @@ namespace Web.Controllers
 
             ViewBag.Teams = teams;
             ViewBag.Fixtures = fixtures;
-            ViewBag.TournamentId = id;
 
             return View(details);
         }
+
+        public async Task<IActionResult> LineUp(string homeId, string awayId, string id)
+        {
+            IEnumerable<ListPlayerModel> homePlayers = await playerService.GetAll(homeId);
+            IEnumerable<ListPlayerModel> awayPlayers = await playerService.GetAll(awayId);
+            ViewBag.HomePlayers = homePlayers;
+            ViewBag.AwayPlayers = awayPlayers;
+            ViewBag.TournamentId = id;
+
+            return View();
+        }
+
+        //public async Task<IActionResult> Match(string homeId, string awayId)
+        //{
+
+
+        //    return View();
+        //}
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateTournamentModel model)
@@ -96,8 +107,11 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LineUp(string[] homeIds, string[] awayIds)
+        public async Task<IActionResult> LineUp(string[] homeIds, string[] awayIds, string tournamentId)
         {
+            IEnumerable<ListPlayerModel> homePlayers = await playerService.GetAll(homeIds);
+            IEnumerable<ListPlayerModel> awayPlayers = await playerService.GetAll(awayIds);
+            { }
             return View();
         }
     }

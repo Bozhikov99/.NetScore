@@ -1,6 +1,4 @@
-﻿using Infrastructure.Models.Enums;
-
-namespace Core.ViewModels.Player
+﻿namespace Core.ViewModels.Player
 {
     public class ListPlayerModel
     {
@@ -13,5 +11,9 @@ namespace Core.ViewModels.Player
         public string ImageUrl { get; set; }
 
         public string Position { get; set; }
+
+        public string TeamImageUrl { get; set; }
+
+        public string Team { get; set; }
     }
 }

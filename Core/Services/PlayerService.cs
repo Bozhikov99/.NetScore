@@ -65,9 +65,19 @@ namespace Core.Services
 
             return players;
         }
+
         public async Task<IEnumerable<ListPlayerModel>> GetAll(string teamId)
         {
             IEnumerable<ListPlayerModel> players = await repository.All<Player>(p => p.TeamId == teamId)
+                .ProjectTo<ListPlayerModel>(mapper.ConfigurationProvider)
+                .ToArrayAsync();
+
+            return players;
+        }
+
+        public async Task<IEnumerable<ListPlayerModel>> GetAll(string[] ids)
+        {
+            IEnumerable<ListPlayerModel> players = await repository.All<Player>(p => ids.Contains(p.Id))
                 .ProjectTo<ListPlayerModel>(mapper.ConfigurationProvider)
                 .ToArrayAsync();
 

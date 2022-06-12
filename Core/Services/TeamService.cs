@@ -95,15 +95,6 @@ namespace Core.Services
             return teams;
         }
 
-        public async Task<IEnumerable<ListPlayerModel>> GetPlayers(string id)
-        {
-            IEnumerable<ListPlayerModel> players = await repository.All<Player>(p=>p.TeamId==id)
-                .ProjectTo<ListPlayerModel>(mapper.ConfigurationProvider)
-                .ToArrayAsync();
-
-            return players;
-        }
-
         public async Task<EditTeamModel> GetEditModel(string id)
         {
             Team team = await repository.GetByIdAsync<Team>(id);
@@ -146,6 +137,14 @@ namespace Core.Services
                 currentPlayer.Team = team;
                 team.Players.Add(currentPlayer);
             }
+        }
+
+        public async Task<ListTeamModel> GetById(string id)
+        {
+            Team team = await repository.GetByIdAsync<Team>(id);
+            ListTeamModel model = mapper.Map<ListTeamModel>(team);
+
+            return model;
         }
     }
 }

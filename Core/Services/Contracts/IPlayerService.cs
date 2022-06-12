@@ -18,6 +18,8 @@ namespace Core.Services.Contracts
 
         Task<IEnumerable<ListPlayerModel>> GetAll(string teamId);
 
+        Task<IEnumerable<ListPlayerModel>> GetAll(string[] ids);
+
         Task<IEnumerable<ListPlayerModel>> GetFreeAgents();
     }
 }
