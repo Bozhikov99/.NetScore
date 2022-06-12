@@ -16,95 +16,104 @@
 }
 
 <div class="row">
-    <div class="col">
-        <h2>Home</h2>
-        @*        @foreach (ListPlayerModel p in homePlayers)
-            {
-            <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-            }*@
-        <h3>Keepers</h3>
-        <table class="table">
-            <thead>
-            </thead>
-            <tbody>
-                @foreach (ListPlayerModel p in homeGoalkeepers)
+    <form asp-action="LineUp">
+        <div class="col home">
+            <h2>Home</h2>
+            <h3>Keepers</h3>
+            <table class="table">
+                <thead>
+                </thead>
+                <tbody>
+                    @foreach (ListPlayerModel p in homeGoalkeepers)
+                    {
+                        <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                        <input type="checkbox" name="homeIds" value=@p.Id />
+                    }
+                </tbody>
+            </table>
+            <h3>Defenders</h3>
+            <table class="table">
+                <tbody>
+                    @foreach (ListPlayerModel p in homeDefenders)
+                    {
+                        <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                        <input type="checkbox" name="homeIds" value=@p.Id />
+                    }
+                </tbody>
+            </table>
+            <h3>Midfielders</h3>
+            <table>
+                <tbody>
+                    @foreach (ListPlayerModel p in homeMidfielders)
+                    {
+                        <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                        <input type="checkbox" name="homeIds" value=@p.Id />
+                    }
+                </tbody>
+            </table>
+            <table class="table">
+                <h3>Strikers</h3>
+                <tbody>
+                    @foreach (ListPlayerModel p in homeStrikers)
+                    {
+                        <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                        <input type="checkbox" name="homeIds" value=@p.Id />
+                    }
+                </tbody>
+            </table>
+        </div>
+        @*AWAY TEAM*@
+        <div class="col away">
+            <h2>Away</h2>
+            @*        @foreach (ListPlayerModel p in homePlayers)
                 {
-                    <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-                }
-            </tbody>
-        </table>
-        <h3>Defenders</h3>
-        <table class="table">
-            <tbody>
-                @foreach (ListPlayerModel p in homeDefenders)
-                {
-                    <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-                }
-            </tbody>
-        </table>
-        <h3>Midfielders</h3>
-        <table>
-            <tbody>
-                @foreach (ListPlayerModel p in homeMidfielders)
-                {
-                    <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-                }
-            </tbody>
-        </table>
-        <table class="table">
-            <h3>Strikers</h3>
-            <tbody>
-                @foreach (ListPlayerModel p in homeStrikers)
-                {
-                    <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-                }
-            </tbody>
-        </table>
-    </div>
-    @*AWAY TEAM*@
-    <div class="col">
-         <h2>Away</h2>
-        @*        @foreach (ListPlayerModel p in homePlayers)
-            {
-            <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-            }*@
-        <h3>Keepers</h3>
-        <table class="table">
-            <thead>
-            </thead>
-            <tbody>
-                @foreach (ListPlayerModel p in awayGoalkeepers)
-                {
-                    <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-                }
-            </tbody>
-        </table>
-        <h3>Defenders</h3>
-        <table class="table">
-            <tbody>
-                @foreach (ListPlayerModel p in awayDefenders)
-                {
-                    <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-                }
-            </tbody>
-        </table>
-        <h3>Midfielders</h3>
-        <table>
-            <tbody>
-                @foreach (ListPlayerModel p in awayMidfielders)
-                {
-                    <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-                }
-            </tbody>
-        </table>
-        <table class="table">
-            <h3>Strikers</h3>
-            <tbody>
-                @foreach (ListPlayerModel p in awayStrikers)
-                {
-                    <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-                }
-            </tbody>
-        </table>
-    </div>
+                <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                }*@
+            <h3>Keepers</h3>
+            <table class="table">
+                <thead>
+                </thead>
+                <tbody>
+                    @foreach (ListPlayerModel p in awayGoalkeepers)
+                    {
+                        <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                        <input type="checkbox" name="awayIds" value=@p.Id />
+                    }
+                </tbody>
+            </table>
+            <h3>Defenders</h3>
+            <table class="table">
+                <tbody>
+                    @foreach (ListPlayerModel p in awayDefenders)
+                    {
+                        <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                        <input type="checkbox" name="awayIds" value=@p.Id />
+                    }
+                </tbody>
+            </table>
+            <h3>Midfielders</h3>
+            <table>
+                <tbody>
+                    @foreach (ListPlayerModel p in awayMidfielders)
+                    {
+                        <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                        <input type="checkbox" name="awayIds" value=@p.Id />
+                    }
+                </tbody>
+            </table>
+            <table class="table">
+                <h3>Strikers</h3>
+                <tbody>
+                    @foreach (ListPlayerModel p in awayStrikers)
+                    {
+                        <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                        <input type="checkbox" name="awayIds" value=@p.Id />
+                    }
+                </tbody>
+            </table>
+        </div>
+        <button type="submit">Ready</button>
+    </form>
 </div>
+
+<script type="module" src="~/js/lineup.js"></script>
