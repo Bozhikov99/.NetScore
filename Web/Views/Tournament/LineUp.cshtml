@@ -3,18 +3,108 @@
 @{
     IEnumerable<ListPlayerModel> homePlayers = ViewBag.HomePlayers;
     IEnumerable<ListPlayerModel> awayPlayers = ViewBag.AwayPlayers;
+
+    ListPlayerModel[] homeDefenders = homePlayers.Where(p => p.Position == "Defender").ToArray();
+    ListPlayerModel[] homeStrikers = homePlayers.Where(p => p.Position == "Striker").ToArray();
+    ListPlayerModel[] homeMidfielders = homePlayers.Where(p => p.Position == "Midfielder").ToArray();
+    ListPlayerModel[] homeGoalkeepers = homePlayers.Where(p => p.Position == "GoalKeeper").ToArray();
+
+    ListPlayerModel[] awayDefenders = awayPlayers.Where(p => p.Position == "Defender").ToArray();
+    ListPlayerModel[] awayStrikers = awayPlayers.Where(p => p.Position == "Striker").ToArray();
+    ListPlayerModel[] awayMidfielders = awayPlayers.Where(p => p.Position == "Midfielder").ToArray();
+    ListPlayerModel[] awayGoalkeepers = awayPlayers.Where(p => p.Position == "GoalKeeper").ToArray();
 }
 
-<div>
-    @foreach (ListPlayerModel p in homePlayers)
-    {
-        <h2>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h2>
-    }
-</div>
-
-<div>
-    @foreach (ListPlayerModel p in awayPlayers)
-    {
-        <h2>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h2>
-    }
+<div class="row">
+    <div class="col">
+        <h2>Home</h2>
+        @*        @foreach (ListPlayerModel p in homePlayers)
+            {
+            <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+            }*@
+        <h3>Keepers</h3>
+        <table class="table">
+            <thead>
+            </thead>
+            <tbody>
+                @foreach (ListPlayerModel p in homeGoalkeepers)
+                {
+                    <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                }
+            </tbody>
+        </table>
+        <h3>Defenders</h3>
+        <table class="table">
+            <tbody>
+                @foreach (ListPlayerModel p in homeDefenders)
+                {
+                    <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                }
+            </tbody>
+        </table>
+        <h3>Midfielders</h3>
+        <table>
+            <tbody>
+                @foreach (ListPlayerModel p in homeMidfielders)
+                {
+                    <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                }
+            </tbody>
+        </table>
+        <table class="table">
+            <h3>Strikers</h3>
+            <tbody>
+                @foreach (ListPlayerModel p in homeStrikers)
+                {
+                    <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                }
+            </tbody>
+        </table>
+    </div>
+    @*AWAY TEAM*@
+    <div class="col">
+         <h2>Away</h2>
+        @*        @foreach (ListPlayerModel p in homePlayers)
+            {
+            <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+            }*@
+        <h3>Keepers</h3>
+        <table class="table">
+            <thead>
+            </thead>
+            <tbody>
+                @foreach (ListPlayerModel p in awayGoalkeepers)
+                {
+                    <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                }
+            </tbody>
+        </table>
+        <h3>Defenders</h3>
+        <table class="table">
+            <tbody>
+                @foreach (ListPlayerModel p in awayDefenders)
+                {
+                    <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                }
+            </tbody>
+        </table>
+        <h3>Midfielders</h3>
+        <table>
+            <tbody>
+                @foreach (ListPlayerModel p in awayMidfielders)
+                {
+                    <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                }
+            </tbody>
+        </table>
+        <table class="table">
+            <h3>Strikers</h3>
+            <tbody>
+                @foreach (ListPlayerModel p in awayStrikers)
+                {
+                    <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

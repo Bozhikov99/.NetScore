@@ -97,7 +97,7 @@ namespace Core.Services
 
         public async Task<IEnumerable<ListPlayerModel>> GetPlayers(string id)
         {
-            IEnumerable<ListPlayerModel> players = await repository.All<Player>()
+            IEnumerable<ListPlayerModel> players = await repository.All<Player>(p=>p.TeamId==id)
                 .ProjectTo<ListPlayerModel>(mapper.ConfigurationProvider)
                 .ToArrayAsync();
 
