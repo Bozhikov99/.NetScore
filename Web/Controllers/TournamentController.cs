@@ -45,6 +45,13 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Schedule(string id)
         {
+            bool isScheduled = await tournamentService.IsScheduled(id);
+
+            if (isScheduled)
+            {
+                return RedirectToAction("Error");
+            }
+
             IEnumerable<ListTeamModel> teams = await teamService.GetTeamsForTournament(id);
             ViewBag.Teams = teams;
             ViewBag.TournamentId = id;
@@ -115,7 +122,7 @@ namespace Web.Controllers
         public async Task<IActionResult> LoadMatch(string[] homeIds, string[] awayIds, string tournamentId)
         {
             LoadedMatchModel match = await matchService.LoadMatch(homeIds, awayIds, tournamentId);
-            { }
+
             return View(match);
         }
     }

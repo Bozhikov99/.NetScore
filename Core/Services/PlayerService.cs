@@ -69,6 +69,9 @@ namespace Core.Services
         public async Task<IEnumerable<ListPlayerModel>> GetAll(string teamId)
         {
             IEnumerable<ListPlayerModel> players = await repository.All<Player>(p => p.TeamId == teamId)
+                .OrderBy(p => p.Position)
+                .ThenBy(p => p.LastName)
+                .ThenBy(p => p.FirstName)
                 .ProjectTo<ListPlayerModel>(mapper.ConfigurationProvider)
                 .ToArrayAsync();
 
@@ -78,6 +81,9 @@ namespace Core.Services
         public async Task<IEnumerable<ListPlayerModel>> GetAll(string[] ids)
         {
             IEnumerable<ListPlayerModel> players = await repository.All<Player>(p => ids.Contains(p.Id))
+                .OrderBy(p => p.LastName)
+                .ThenBy(p => p.FirstName)
+                .ThenBy(p => p.FirstName)
                 .ProjectTo<ListPlayerModel>(mapper.ConfigurationProvider)
                 .ToArrayAsync();
 
