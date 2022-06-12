@@ -13,13 +13,54 @@ checkboxElements.forEach(cbe => cbe.addEventListener(
 
 
 function checkStartingPLayers(homeCheckboxes, awayCheckboxes) {
-    let homeChecked = homeCheckboxes.filter(c => c.checked);
-    let awayChecked = awayCheckboxes.filter(c => c.checked);
+    let homeCheckedTotal = homeCheckboxes.filter(c => c.checked);
+    let awayCheckedTotal = awayCheckboxes.filter(c => c.checked);
 
-    if (awayChecked.length == 11 && homeChecked.length == 11) {
+    let homeGks = homeCheckboxes.filter(hc => isPositionChecked(hc, 'goalkeeper'));
+    let awayGks = awayCheckboxes.filter(hc => isPositionChecked(hc, 'goalkeeper'));
+
+    let homeDefenders = homeCheckboxes.filter(hc => isPositionChecked(hc, 'defender'));
+    let awayDefenders = awayCheckboxes.filter(hc => isPositionChecked(hc, 'defender'));
+
+    let homeMidfielders = homeCheckboxes.filter(hc => isPositionChecked(hc, 'midfielder'));
+    let awayMidfielders = awayCheckboxes.filter(hc => isPositionChecked(hc, 'midfielder'));
+
+    let homeStrikers = homeCheckboxes.filter(hc => isPositionChecked(hc, 'striker'));
+    let awayStrikers = awayCheckboxes.filter(hc => isPositionChecked(hc, 'midfielder'));
+
+    let isAwayCountValid = awayCheckedTotal.length == 11
+    let isHomeCountValid = homeCheckedTotal.length == 11
+    //let isAway
+    //    &&
+    //    awayGk == 1 &&
+    //    awayDefenders >= 3 &&
+    //    awayMidfielders >= 2 &&
+    //    awayStrikers >= 1
+
+    let isHomeSquadValid =
+        homeGks == 1 &&
+        homeDefenders >= 3 &&
+        homeMidfielders >= 2 &&
+        homeStrikers >= 1;
+
+    let isAwaySquadValid =
+        awayGks == 1 &&
+        awayDefenders >= 3 &&
+        awayMidfielders >= 2 &&
+        awayStrikers >= 1;
+
+    let areTeamsValid = isAwaySquadValid && isHomeSquadValid;
+    let areCountsValid = isHomeCountValid && isAwaySquadValid;
+
+    if (areCountsValid && areTeamsValid) {
         submitButtonElement.removeAttribute('disabled');
-    }
-    else {
+    } else {
+        console.log('Home and Away starting players must be 11')
         submitButtonElement.setAttribute('disabled', 'true');
     }
+}
+
+function isPositionChecked(element, className) {
+    return element.classList.contains(className) &&
+        element.checked;
 }

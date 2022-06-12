@@ -35,6 +35,9 @@ namespace Core.ViewModels.Player
         [Required]
         public string Country { get; set; }
 
+        [Required]
+        public string TeamId { get; set; }
+
         public DateTime? BirthDate { get; set; }
 
     }

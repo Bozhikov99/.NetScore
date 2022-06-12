@@ -27,7 +27,7 @@
                     @foreach (ListPlayerModel p in homeGoalkeepers)
                     {
                         <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-                        <input type="checkbox" name="homeIds" value=@p.Id />
+                        <input type="checkbox" class="goalkeeper" name="homeIds" value=@p.Id />
                     }
                 </tbody>
             </table>
@@ -37,7 +37,7 @@
                     @foreach (ListPlayerModel p in homeDefenders)
                     {
                         <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-                        <input type="checkbox" name="homeIds" value=@p.Id />
+                        <input type="checkbox" class="defender" name="homeIds" value=@p.Id />
                     }
                 </tbody>
             </table>
@@ -47,7 +47,7 @@
                     @foreach (ListPlayerModel p in homeMidfielders)
                     {
                         <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-                        <input type="checkbox" name="homeIds" value=@p.Id />
+                        <input type="checkbox" class="midfielder" name="homeIds" value=@p.Id />
                     }
                 </tbody>
             </table>
@@ -57,7 +57,7 @@
                     @foreach (ListPlayerModel p in homeStrikers)
                     {
                         <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-                        <input type="checkbox" name="homeIds" value=@p.Id />
+                        <input type="checkbox" class="striker" name="homeIds" value=@p.Id />
                     }
                 </tbody>
             </table>
@@ -77,7 +77,7 @@
                     @foreach (ListPlayerModel p in awayGoalkeepers)
                     {
                         <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-                        <input type="checkbox" name="awayIds" value=@p.Id />
+                        <input type="checkbox" class="goalkeeper" name="awayIds" value=@p.Id />
                     }
                 </tbody>
             </table>
@@ -87,7 +87,7 @@
                     @foreach (ListPlayerModel p in awayDefenders)
                     {
                         <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-                        <input type="checkbox" name="awayIds" value=@p.Id />
+                        <input type="checkbox" class="defender" name="awayIds" value=@p.Id />
                     }
                 </tbody>
             </table>
@@ -97,7 +97,7 @@
                     @foreach (ListPlayerModel p in awayMidfielders)
                     {
                         <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-                        <input type="checkbox" name="awayIds" value=@p.Id />
+                        <input type="checkbox" class="midfielder" name="awayIds" value=@p.Id />
                     }
                 </tbody>
             </table>
@@ -107,7 +107,7 @@
                     @foreach (ListPlayerModel p in awayStrikers)
                     {
                         <h4>@($"{p.FirstName.Substring(0, 1)}"). @p.LastName</h4>
-                        <input type="checkbox" name="awayIds" value=@p.Id />
+                        <input type="checkbox" class="striker" name="awayIds" value=@p.Id />
                     }
                 </tbody>
             </table>
