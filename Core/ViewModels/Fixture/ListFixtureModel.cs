@@ -13,5 +13,7 @@ namespace Core.ViewModels.Fixture
         public string AwayTeamId { get; set; }
 
         public string TournamentId { get; set; }
+
+        public bool IsEligible { get; set; }
     }
 }

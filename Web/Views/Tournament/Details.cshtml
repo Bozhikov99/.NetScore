@@ -44,11 +44,14 @@ else
             <div class="col" style="background-color:@home.Color">
                 <h2>@home.Name</h2>
             </div>
-            <div class="col align-items-center">
-                <a asp-action="LineUp" asp-route-homeId=@home.Id asp-route-awayId=@away.Id>
-                <button>Play Match</button>
-                </a>
-            </div>
+            @if (f.IsEligible)
+            {
+                <div class="col align-items-center">
+                    <a asp-action="LineUp" asp-route-homeId=@home.Id asp-route-awayId=@away.Id>
+                        <button>Play Match</button>
+                    </a>
+                </div>
+            }
             <div class="col" style="background-color:@away.Color">
                 <h2>@away.Name</h2>
             </div>
