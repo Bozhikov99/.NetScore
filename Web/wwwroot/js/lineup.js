@@ -38,19 +38,19 @@ function checkStartingPLayers(homeCheckboxes, awayCheckboxes) {
     //    awayStrikers >= 1
 
     let isHomeSquadValid =
-        homeGks == 1 &&
-        homeDefenders >= 3 &&
-        homeMidfielders >= 2 &&
-        homeStrikers >= 1;
+        homeGks.length == 1 &&
+        homeDefenders.length >= 3 &&
+        homeMidfielders.length >= 2 &&
+        homeStrikers.length >= 1;
 
     let isAwaySquadValid =
-        awayGks == 1 &&
-        awayDefenders >= 3 &&
-        awayMidfielders >= 2 &&
-        awayStrikers >= 1;
+        awayGks.length == 1 &&
+        awayDefenders.length >= 3 &&
+        awayMidfielders.length >= 2 &&
+        awayStrikers.length >= 1;
 
     let areTeamsValid = isAwaySquadValid && isHomeSquadValid;
-    let areCountsValid = isHomeCountValid && isAwaySquadValid;
+    let areCountsValid = isHomeCountValid && isAwayCountValid;
 
     if (areCountsValid && areTeamsValid) {
         submitButtonElement.removeAttribute('disabled');
