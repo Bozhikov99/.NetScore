@@ -1,5 +1,7 @@
-﻿using Core.Services.Contracts;
+﻿using Core.Services;
+using Core.Services.Contracts;
 using Core.ViewModels.Fixture;
+using Core.ViewModels.Match;
 using Core.ViewModels.Player;
 using Core.ViewModels.Team;
 using Core.ViewModels.Tournament;
@@ -12,15 +14,18 @@ namespace Web.Controllers
         private readonly ITournamentService tournamentService;
         private readonly ITeamService teamService;
         private readonly IPlayerService playerService;
+        private readonly IMatchService matchService;
 
         public TournamentController(
             ITournamentService tournamentService,
             ITeamService teamService,
-            IPlayerService playerService)
+            IPlayerService playerService,
+            IMatchService matchService)
         {
             this.tournamentService = tournamentService;
             this.teamService = teamService;
             this.playerService = playerService;
+            this.matchService = matchService;
         }
 
         public async Task<IActionResult> All()
@@ -107,12 +112,11 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> LineUp(string[] homeIds, string[] awayIds, string tournamentId)
+        public async Task<IActionResult> LoadMatch(string[] homeIds, string[] awayIds, string tournamentId)
         {
-            IEnumerable<ListPlayerModel> homePlayers = await playerService.GetAll(homeIds);
-            IEnumerable<ListPlayerModel> awayPlayers = await playerService.GetAll(awayIds);
+            LoadedMatchModel match = await matchService.LoadMatch(homeIds, awayIds, tournamentId);
             { }
-            return View();
+            return View(match);
         }
     }
 }

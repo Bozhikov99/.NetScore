@@ -31,6 +31,7 @@ builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<ITournamentService, TournamentService>();
+builder.Services.AddScoped<IMatchService, MatchService>();
 
 builder.Services.AddControllersWithViews()
         .AddMvcOptions(options =>
