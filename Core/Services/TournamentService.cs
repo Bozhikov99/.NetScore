@@ -50,6 +50,11 @@ namespace Core.Services
 
         public async Task Schedule(CreateFixtureModel[] schedule)
         {
+            if (true)
+            {
+
+            }
+
             List<Fixture> fixtures = new List<Fixture>();
 
             foreach (CreateFixtureModel f in schedule)

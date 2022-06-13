@@ -21,6 +21,8 @@ namespace Infrastructure.Models
         [Key]
         public string Id { get; set; }
 
+        public int Goals { get; set; }
+
         public bool IsWinner { get; set; }
 
         [Required]

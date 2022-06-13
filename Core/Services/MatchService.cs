@@ -28,10 +28,16 @@ namespace Core.Services
         public async Task<LoadedMatchModel> LoadMatch(string[] homeIds, string[] awayIds, string tournamentId)
         {
             IEnumerable<ListPlayerModel> homePlayers = await repository.All<Player>(p => homeIds.Contains(p.Id))
+                .OrderBy(p => p.Position)
+                .ThenBy(p => p.LastName)
+                .ThenBy(p => p.FirstName)
                 .ProjectTo<ListPlayerModel>(mapper.ConfigurationProvider)
                 .ToArrayAsync();
 
             IEnumerable<ListPlayerModel> awayPlayers = await repository.All<Player>(p => awayIds.Contains(p.Id))
+                .OrderBy(p => p.Position)
+                .ThenBy(p => p.LastName)
+                .ThenBy(p => p.FirstName)
                 .ProjectTo<ListPlayerModel>(mapper.ConfigurationProvider)
                 .ToArrayAsync();
 
