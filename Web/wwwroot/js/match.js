@@ -1,6 +1,67 @@
 ﻿let playerCardElements = document.querySelectorAll('.player-card');
 let modalContainerElement = document.querySelector('.modal-container');
 let closeElement = document.querySelector('#close');
+let plusElements = modalContainerElement.querySelectorAll('.add');
+let minusElements = modalContainerElement.querySelectorAll('.substract');
+let playerNumber = 0;
+
+plusElements.forEach(pe => pe.addEventListener('click', () => {
+    let parentElement = pe.parentElement;
+    let modalStatElement = parentElement.querySelector('.stat');
+    let statName = modalStatElement.dataset.stat;
+    let number = Number(modalStatElement.textContent);
+    modalStatElement.textContent = number;
+    increaseStat(playerNumber, statName, modalStatElement);
+}));
+
+minusElements.forEach(me => me.addEventListener('click', () => {
+    let parentElement = me.parentElement;
+    let modalStatElement = parentElement.querySelector('.stat');
+    let statName = modalStatElement.dataset.stat;
+    let currentStat = Number(modalStatElement.textContent);
+
+    if (currentStat) {
+        decreaseStat(playerNumber, statName, modalStatElement);
+    }
+}));
+
+function decreaseStat(playerNumber, currentStat, modalStatElement) {
+    let number = Number(modalStatElement.textContent) - 1;
+    modalStatElement.textContent = number;
+
+    let card = Array.from(document.querySelectorAll('.player-card'))
+        .find(c => c.dataset.player == playerNumber);
+
+    console.log(card);
+
+    let currentInput = card.querySelector(`input[name="${currentStat}"]`)
+    console.log(currentInput);
+    insertStat(modalStatElement, playerNumber, number);
+}
+
+function increaseStat(playerNumber, statName, modalStatElement) {
+
+    let number = Number(modalStatElement.textContent) + 1;
+    modalStatElement.textContent = number;
+
+    let card = Array.from(document.querySelectorAll('.player-card'))
+        .find(c => c.dataset.player == playerNumber);
+
+    console.log(card);
+
+    let currentInput = card.querySelector(`input[name="${statName}"]`)
+    console.log(currentInput);
+    insertStat(modalStatElement, playerNumber, number);
+}
+
+function insertStat(statName, playerNumber, value) {
+    let cards = Array.from(document.querySelectorAll('.player-card'));
+    let currentCard = cards.find(c => c.dataset.player == playerNumber);
+    let targetInput = currentCard.querySelector(`input[name="${statName.dataset.stat}"]`)
+    console.log(targetInput);
+    console.log(targetInput.value);
+    targetInput.value = value;
+}
 
 closeElement.addEventListener('click', () => {
     modalContainerElement.setAttribute('hidden', true);
@@ -18,7 +79,7 @@ playerCardElements.forEach(pce => pce.addEventListener('click', () => {
     let modalImageElement = modalContainerElement.querySelector('img');
     let modalNameElement = modalContainerElement.querySelector('#modal-name');
 
-    let playerNumber = pce.dataset.player;
+    playerNumber = pce.dataset.player;
 
     //load the player's match stats
     let goalsInputElement = pce.querySelector('input[name="Goals"]');
@@ -55,24 +116,15 @@ playerCardElements.forEach(pce => pce.addEventListener('click', () => {
     let plusElements = modalContainerElement.querySelectorAll('.add');
     let minusElements = modalContainerElement.querySelectorAll('.substract');
 
-    plusElements.forEach(pe => pe.addEventListener('click', () => {
-        let parentElement = pe.parentElement;
-        let modalStatElement = parentElement.querySelector('.stat');
-        let number = Number(modalStatElement.textContent) + 1;
-        modalStatElement.textContent = number;
-    }));
+    plusElements.forEach(pe => {
+        let newNode = pe.cloneNode()
+        pe = newNode;
+    });
 
-    minusElements.forEach(me => me.addEventListener('click', () => {
-        let parentElement = me.parentElement;
-        let modalStatElement = parentElement.querySelector('.stat');
-        let currentStat = Number(modalStatElement.textContent);
-
-        if (currentStat) {
-            let number = Number(modalStatElement.textContent) - 1;
-            modalStatElement.textContent = number;
-        }
-
-    }))
+    minusElements.forEach(me => {
+        let newNode = me.cloneNode()
+        me = newNode;
+    });
 
     modalContainerElement.removeAttribute('hidden');
-}));
+}))
