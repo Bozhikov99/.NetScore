@@ -34,6 +34,12 @@
                 <div class="player-card">
                     <img src=@p.ImageUrl style="width: 40px" />
                     <h3>@p.LastName</h3>
+                    <input hidden name="Goals" />
+                    <input hidden name="Assists" />
+                    <input hidden name="Passes" />
+                    <input hidden name="Tackles" />
+                    <input hidden name="Fouls" />
+                    <input hidden name="Saves" />
                 </div>
             }
         </div>
@@ -52,36 +58,44 @@
     </div>
 </div>
 
-<div id="modal" style="width: 25%; font-size: 2rem">
-    <img style="width: 100%;" src="https://i.pinimg.com/originals/d1/f0/48/d1f048827f146b322fba300b6529fb79.jpg" />
-    <div id="goals" class="row">
-        <span class="col text-center" style="color: red">-</span>
-        <h4 class="col text-center">Goals</h4>
-        <span class="col text-center" style="color: green">+</span>
-    </div>
-    <div id="assists" class="row">
-        <span class="col text-center" style="color: red">-</span>
-        <h4 class="col text-center">Assists</h4>
-        <span class="col text-center" style="color: green">+</span>
-    </div>
-    <div id="passes" class="row">
-        <span class="col text-center" style="color: red">-</span>
-        <h4 class="col text-center">Passes</h4>
-        <span class="col text-center" style="color: green">+</span>
-    </div>
-    <div id="tackles" class="row">
-        <span class="col text-center" style="color: red">-</span>
-        <h4 class="col text-center">Tackles</h4>
-        <span class="col text-center" style="color: green">+</span>
-    </div>
-    <div id="fouls" class="row">
-        <span class="col text-center" style="color: red">-</span>
-        <h4 class="col text-center">Fouls</h4>
-        <span class="col text-center" style="color: green">+</span>
-    </div>
-    <div id="saves" class="row">
-        <span class="col text-center" style="color: red">-</span>
-        <h4 class="col text-center">Saves</h4>
-        <span class="col text-center" style="color: green">+</span>
+<div hidden class="modal-container">
+    <div id="modal" class="modal">
+        <button id="close">X</button>
+        <div class="modal-upper row">
+            <img class="col" style="width: 60%;" src="https://i.pinimg.com/originals/d1/f0/48/d1f048827f146b322fba300b6529fb79.jpg" />
+            <h3 class="col" style="width: 40%">Name</h3>
+        </div>
+        <div id="goals" class="row">
+            <span class="col text-center" style="color: red">-</span>
+            <h4 class="col text-center">Goals</h4>
+            <span class="col text-center" style="color: green">+</span>
+        </div>
+        <div id="assists" class="row">
+            <span class="col text-center" style="color: red">-</span>
+            <h4 class="col text-center">Assists</h4>
+            <span class="col text-center" style="color: green">+</span>
+        </div>
+        <div id="passes" class="row">
+            <span class="col text-center" style="color: red">-</span>
+            <h4 class="col text-center">Passes</h4>
+            <span class="col text-center" style="color: green">+</span>
+        </div>
+        <div id="tackles" class="row">
+            <span class="col text-center" style="color: red">-</span>
+            <h4 class="col text-center">Tackles</h4>
+            <span class="col text-center" style="color: green">+</span>
+        </div>
+        <div id="fouls" class="row">
+            <span class="col text-center" style="color: red">-</span>
+            <h4 class="col text-center">Fouls</h4>
+            <span class="col text-center" style="color: green">+</span>
+        </div>
+        <div id="saves" class="row">
+            <span class="col text-center" style="color: red">-</span>
+            <h4 class="col text-center">Saves</h4>
+            <span class="col text-center" style="color: green">+</span>
+        </div>
     </div>
 </div>
+
+<script type="module" src="~/js/match.js"></script>
