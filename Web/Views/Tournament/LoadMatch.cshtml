@@ -5,8 +5,7 @@
 
 @{
     ViewData["Title"] = "Match";
-
-
+    int playerCounter = 0;
 }
 
 <div id="match-div" class="row w-50">
@@ -31,15 +30,15 @@
         <div>
             @foreach (ListPlayerModel p in Model.HomePlayers)
             {
-                <div class="player-card">
+                <div class="player-card" data-player=@(playerCounter++)>
                     <img src=@p.ImageUrl style="width: 40px" />
-                    <h3>@p.LastName</h3>
-                    <input hidden name="Goals" />
-                    <input hidden name="Assists" />
-                    <input hidden name="Passes" />
-                    <input hidden name="Tackles" />
-                    <input hidden name="Fouls" />
-                    <input hidden name="Saves" />
+                    <h3 data-firstName=@p.FirstName >@p.LastName</h3>
+                    <input hidden name="Goals" value=0 />
+                    <input hidden name="Assists" value=0 />
+                    <input hidden name="Passes" value=0 />
+                    <input hidden name="Tackles" value=0 />
+                    <input hidden name="Fouls" value=0 />
+                    <input hidden name="Saves" value=0 />
                 </div>
             }
         </div>
@@ -49,7 +48,7 @@
             <h2>@Model.AwayTeam.Name</h2>
             @foreach (ListPlayerModel p in Model.AwayPlayers)
             {
-                <div class="player-card">
+                <div class="player-card" data-player=@(playerCounter++)>
                     <img src=@p.ImageUrl style="width: 40px" />
                     <h3>@p.LastName</h3>
                 </div>
@@ -63,37 +62,43 @@
         <button id="close">X</button>
         <div class="modal-upper row">
             <img class="col" style="width: 60%;" src="https://i.pinimg.com/originals/d1/f0/48/d1f048827f146b322fba300b6529fb79.jpg" />
-            <h3 class="col" style="width: 40%">Name</h3>
+            <h3 id="modal-name" class="col" style="width: 40%">Name</h3>
         </div>
         <div id="goals" class="row">
-            <span class="col text-center" style="color: red">-</span>
-            <h4 class="col text-center">Goals</h4>
-            <span class="col text-center" style="color: green">+</span>
+            <span class="col text-center substract" style="color: red">-</span>
+            <p class="col text-center">Goals</p>
+            <p class="col text-center stat" name="Goals">0</p>
+            <span class="col text-center add" style="color: green">+</span>
         </div>
         <div id="assists" class="row">
-            <span class="col text-center" style="color: red">-</span>
-            <h4 class="col text-center">Assists</h4>
-            <span class="col text-center" style="color: green">+</span>
+            <span class="col text-center substract" style="color: red">-</span>
+            <p class="col text-center">Assists</p>
+            <p class="col text-center stat" name="Assists">0</p>
+            <span class="col text-center add" style="color: green">+</span>
         </div>
         <div id="passes" class="row">
-            <span class="col text-center" style="color: red">-</span>
-            <h4 class="col text-center">Passes</h4>
-            <span class="col text-center" style="color: green">+</span>
+            <span class="col text-center substract" style="color: red">-</span>
+            <p class="col text-center">Passes</p>
+            <p class="col text-center stat" name="Passes">0</p>
+            <span class="col text-center add" style="color: green">+</span>
         </div>
         <div id="tackles" class="row">
-            <span class="col text-center" style="color: red">-</span>
-            <h4 class="col text-center">Tackles</h4>
-            <span class="col text-center" style="color: green">+</span>
+            <span class="col text-center substract" style="color: red">-</span>
+            <p class="col text-center">Tackles</p>
+            <p class="col text-center stat" name="Tackles">0</p>
+            <span class="col text-center add" style="color: green">+</span>
         </div>
         <div id="fouls" class="row">
-            <span class="col text-center" style="color: red">-</span>
-            <h4 class="col text-center">Fouls</h4>
-            <span class="col text-center" style="color: green">+</span>
+            <span class="col text-center substract" style="color: red">-</span>
+            <p class="col text-center">Fouls</p>
+            <p class="col text-center stat" name="Fouls">0</p>
+            <span class="col text-center add" style="color: green">+</span>
         </div>
         <div id="saves" class="row">
-            <span class="col text-center" style="color: red">-</span>
-            <h4 class="col text-center">Saves</h4>
-            <span class="col text-center" style="color: green">+</span>
+            <span class="col text-center substract" style="color: red">-</span>
+            <p class="col text-center">Saves</p>
+            <p class="col text-center stat" name="Saves">0</p>
+            <span class="col text-center add" style="color: green">+</span>
         </div>
     </div>
 </div>
