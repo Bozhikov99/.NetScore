@@ -142,6 +142,7 @@ playerCardElements.forEach(pce => pce.addEventListener('click', () => {
     let passesInputElement = pce.querySelector('input[name="Passes"]');
     let tacklesInputElement = pce.querySelector('input[name="Tackles"]');
     let foulsInputElement = pce.querySelector('input[name="Fouls"]');
+    let savesInputElement = pce.querySelector('input[name="Saves"]');
     console.log(goalsInputElement.value);
 
     //load the stats in the modal
@@ -150,12 +151,14 @@ playerCardElements.forEach(pce => pce.addEventListener('click', () => {
     let passsesElement = modalContainerElement.querySelector('p[name="Passes"]');
     let tacklesElement = modalContainerElement.querySelector('p[name="Tackles"]');
     let foulsElement = modalContainerElement.querySelector('p[name="Fouls"]');
+    let savesElement = modalContainerElement.querySelector('p[name="Saves"]');
 
     goalsElement.textContent = goalsInputElement.value;
     assistsElement.textContent = assistsInputElement.value;
     passsesElement.textContent = passesInputElement.value;
     tacklesElement.textContent = tacklesInputElement.value;
     foulsElement.textContent = foulsInputElement.value;
+    savesElement.textContent = savesInputElement.value;
 
     //load the player's image
     let playerImageElement = pce.querySelector('img');

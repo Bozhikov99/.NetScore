@@ -210,5 +210,20 @@
         }
 
         console.log(matchModel);
+
+        $.ajax({
+                type: "POST",
+                url: "@Url.Action("Play")",
+                data: { model: matchModel}
+                })
+                .done(()=>{
+                    let id=tournamentId;
+                    window.location=`https://localhost:44368/Tournament/Details/${tournamentId}`;
+                })
+                //.fail(()=>{
+                //    let id=tournamentId;
+                //    window.location=`https://localhost:44368/Tournament/Schedule/${tournamentId}`;
+                //})
+
     });
 </script>

@@ -125,5 +125,12 @@ namespace Web.Controllers
 
             return View(match);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Play(CreateMatchModel model)
+        {
+            await matchService.CreateMatch(model);
+            return Ok();
+        }
     }
 }
