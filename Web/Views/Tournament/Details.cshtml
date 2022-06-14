@@ -30,7 +30,7 @@
 </div>
 
 
-@if (!Model.IsScheduled)
+@if (!Model.IsScheduled && Model.IsActive)
 {
     <a asp-action="Schedule" asp-route-id=@Model.Id>Schedule</a>
 }
@@ -47,7 +47,7 @@ else
             @if (f.IsEligible)
             {
                 <div class="col align-items-center">
-                    <a asp-action="LineUp" asp-route-homeId=@home.Id asp-route-awayId=@away.Id asp-route-id=@Model.Id >
+                    <a asp-action="LineUp" asp-route-homeId=@home.Id asp-route-awayId=@away.Id asp-route-id=@Model.Id>
                         <button>Play Match</button>
                     </a>
                 </div>

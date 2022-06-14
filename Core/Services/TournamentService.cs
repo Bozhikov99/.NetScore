@@ -44,16 +44,23 @@ namespace Core.Services
                 tournament.Teams.Add(currentTeam);
             }
 
+            tournament.IsActive = true;
+
             await repository.AddAsync(tournament);
             await repository.SaveChangesAsync();
         }
 
         public async Task Schedule(CreateFixtureModel[] schedule)
         {
-            if (true)
-            {
+            string tournamentId = schedule.First().TournamentId;
+            Tournament tournament = await repository.GetByIdAsync<Tournament>(tournamentId);
+            bool isAlreadyScheduled = await IsScheduled(tournamentId);
 
+            if (!tournament.IsActive || isAlreadyScheduled)
+            {
+                throw new InvalidOperationException("Tournament is over or already scheduled");
             }
+
 
             List<Fixture> fixtures = new List<Fixture>();
 

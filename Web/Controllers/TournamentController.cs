@@ -52,7 +52,7 @@ namespace Web.Controllers
                 return RedirectToAction("Error");
             }
 
-            IEnumerable<ListTeamModel> teams = await teamService.GetTeamsForTournament(id);
+            IEnumerable<ListTeamModel> teams = await teamService.GetUndefeatedForTournament(id);
             ViewBag.Teams = teams;
             ViewBag.TournamentId = id;
 

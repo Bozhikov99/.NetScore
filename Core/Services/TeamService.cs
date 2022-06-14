@@ -146,5 +146,21 @@ namespace Core.Services
 
             return model;
         }
+
+        public async Task<IEnumerable<ListTeamModel>> GetUndefeatedForTournament(string id)
+        {
+            var tournament = await repository.All<Tournament>()
+               .Include(t => t.Teams)
+               .Include(t => t.TeamMatchStatistics)
+               .FirstAsync(t => t.Id == id);
+
+            IEnumerable<ListTeamModel> teams = tournament.Teams
+                .Where(t => !t.TeamMatchStatistics.Any(tms => tms.TournamentId == id && !tms.IsWinner))
+                .AsQueryable()
+                .ProjectTo<ListTeamModel>(mapper.ConfigurationProvider);
+
+
+            return teams;
+        }
     }
 }

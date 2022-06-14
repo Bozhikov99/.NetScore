@@ -17,6 +17,8 @@ namespace Core.Services.Contracts
 
         Task<IEnumerable<ListTeamModel>> GetTeamsForTournament(string id);
 
+        Task<IEnumerable<ListTeamModel>> GetUndefeatedForTournament(string id);
+
         Task<EditTeamModel> GetEditModel(string id);
 
         Task<TeamDetailsModel> Details(string id);

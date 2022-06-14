@@ -37,18 +37,11 @@ namespace Core.Services
 
             await repository.DeleteAsync<Fixture>(fixture.Id);
 
+            Tournament tournament = await repository.GetByIdAsync<Tournament>(fixture.TournamentId);
+
             List<PlayerMatchStatistic> homePlayerMatchStatistics = new List<PlayerMatchStatistic>();
             List<PlayerMatchStatistic> awayPlayerMatchStatistics = new List<PlayerMatchStatistic>();
-            //List<PlayerMatchStatistic> homePlayerMatchStatistics = await model.HomePlayerMatchStatistics
-            //    .AsQueryable()
-            //    .ProjectTo<PlayerMatchStatistic>(mapper.ConfigurationProvider)
-            //    .ToListAsync();
 
-            //List<PlayerMatchStatistic> awayPlayerMatchStatistics = await model.AwayPlayerMatchStatistics
-            //    .AsQueryable()
-            //    .ProjectTo<PlayerMatchStatistic>(mapper.ConfigurationProvider)
-            //    .ToListAsync();
-            //----------------------------------------------------------------------------------------------
             foreach (CreatePlayerMatchStatisticModel m in model.HomePlayerMatchStatistics
                 .Where(p => p.TeamId == homeTeamId))
             {
@@ -63,9 +56,6 @@ namespace Core.Services
                 awayPlayerMatchStatistics.Add(currentPlayerStat);
             }
 
-            //await repository.AddRangeAsync(homePlayerMatchStatistics);
-            //await repository.AddRangeAsync(awayPlayerMatchStatistics);
-
             TeamMatchStatistic homeStat = mapper.Map<TeamMatchStatistic>(model.HomeTeamStatistics);
             TeamMatchStatistic awayStat = mapper.Map<TeamMatchStatistic>(model.AwayTeamStatistics);
 
@@ -77,8 +67,12 @@ namespace Core.Services
             await repository.SaveChangesAsync();
             await repository.AddAsync(homeStat);
             await repository.AddAsync(awayStat);
-
             await repository.SaveChangesAsync();
+
+            if (await IsWon(tournament))
+            {
+                await Win(tournament);
+            }
         }
 
         public async Task<LoadedMatchModel> LoadMatch(string[] homeIds, string[] awayIds, string tournamentId)
@@ -126,6 +120,25 @@ namespace Core.Services
             };
 
             return match;
+        }
+
+        private async Task<bool> IsWon(Tournament tournament)
+        {
+            IEnumerable<Team> undefeatedTeams = await repository.All<Team>(
+                t => !t.TeamMatchStatistics.Any(tms => !tms.IsWinner
+                    && tms.TournamentId == tournament.Id))
+                .ToArrayAsync();
+
+            return undefeatedTeams.Count() == 1;
+        }
+
+        private async Task Win(Tournament tournament)
+        {
+            tournament.IsActive = false;
+            Team winner = await repository.All<Team>()
+                .FirstAsync(t => !t.TeamMatchStatistics.Any(tms => !tms.IsWinner && tms.TournamentId == tournament.Id));
+
+            winner.Trophies += 1;
         }
     }
 }
