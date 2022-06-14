@@ -10,5 +10,7 @@ namespace Core.Services
     public interface IMatchService
     {
         Task<LoadedMatchModel> LoadMatch(string[] homeIds, string[] awayIds, string tournamentId);
+
+        Task CreateMatch(CreateMatchModel model);
     }
 }

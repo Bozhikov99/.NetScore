@@ -26,5 +26,8 @@ namespace Core.ViewModels.PlayerMatchStatistic
 
         [Required]
         public string PlayerId { get; set; }
+
+        [Required]
+        public string TeamId { get; set; }
     }
 }

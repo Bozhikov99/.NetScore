@@ -10,5 +10,7 @@ namespace Core.ViewModels.Match
         public CreateTeamMatchStatistic HomeTeamStatistics { get; set; }
 
         public CreateTeamMatchStatistic AwayTeamStatistics { get; set; }
+
+        public string MatchCode { get; set; }
     }
 }

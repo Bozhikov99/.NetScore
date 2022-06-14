@@ -25,6 +25,8 @@ builder.Services.AddAutoMapper(cfg => cfg.AddProfile<PlayerProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<TeamProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<TournamentProfile>());
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<FixtureProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<TeamMatchStatisticProfile>());
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<PlayerMatchStatisticProfile>());
 
 //Services & Repository
 builder.Services.AddScoped<IRepository, Repository>();
