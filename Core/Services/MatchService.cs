@@ -124,6 +124,10 @@ namespace Core.Services
 
         private async Task<bool> IsWon(Tournament tournament)
         {
+            var tournamentTeams = await repository.All<Team>()
+                .Include(t => t.TeamMatchStatistics)
+                .ToArrayAsync();
+
             IEnumerable<Team> undefeatedTeams = await repository.All<Team>(
                 t => !t.TeamMatchStatistics.Any(tms => !tms.IsWinner
                     && tms.TournamentId == tournament.Id))
@@ -139,6 +143,8 @@ namespace Core.Services
                 .FirstAsync(t => !t.TeamMatchStatistics.Any(tms => !tms.IsWinner && tms.TournamentId == tournament.Id));
 
             winner.Trophies += 1;
+
+            await repository.SaveChangesAsync();
         }
     }
 }
