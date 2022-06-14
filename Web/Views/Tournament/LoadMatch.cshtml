@@ -26,11 +26,11 @@
 </div>
 
 <div class="row">
-    <div class="col">
+    <div class="col home">
         <div>
             @foreach (ListPlayerModel p in Model.HomePlayers)
             {
-                <div class="player-card" data-player=@(playerCounter++)>
+                <div class="player-card home" data-player=@(playerCounter++)>
                     <img src=@p.ImageUrl style="width: 40px" />
                     <h3 data-firstName=@p.FirstName >@p.LastName</h3>
                     <input hidden name="Goals" value=0 />
@@ -43,14 +43,20 @@
             }
         </div>
     </div>
-    <div class="col">
+    <div class="col away">
         <div>
             <h2>@Model.AwayTeam.Name</h2>
             @foreach (ListPlayerModel p in Model.AwayPlayers)
             {
-                <div class="player-card" data-player=@(playerCounter++)>
+               <div class="player-card away" data-player=@(playerCounter++)>
                     <img src=@p.ImageUrl style="width: 40px" />
-                    <h3>@p.LastName</h3>
+                    <h3 data-firstName=@p.FirstName >@p.LastName</h3>
+                    <input hidden name="Goals" value=0 />
+                    <input hidden name="Assists" value=0 />
+                    <input hidden name="Passes" value=0 />
+                    <input hidden name="Tackles" value=0 />
+                    <input hidden name="Fouls" value=0 />
+                    <input hidden name="Saves" value=0 />
                 </div>
             }
         </div>

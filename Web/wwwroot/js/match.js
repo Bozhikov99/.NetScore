@@ -3,6 +3,8 @@ let modalContainerElement = document.querySelector('.modal-container');
 let closeElement = document.querySelector('#close');
 let plusElements = modalContainerElement.querySelectorAll('.add');
 let minusElements = modalContainerElement.querySelectorAll('.substract');
+let awayScore = document.querySelector('#away-goals');
+let homeScore = document.querySelector('#home-goals');
 let playerNumber = 0;
 
 plusElements.forEach(pe => pe.addEventListener('click', () => {
@@ -29,6 +31,20 @@ function decreaseStat(playerNumber, currentStat, modalStatElement) {
     let number = Number(modalStatElement.textContent) - 1;
     modalStatElement.textContent = number;
 
+    //check for goals
+    if (currentStat == 'Goals') {
+        if (playerNumber <= 11) {
+            let currentScore = Number(homeScore.textContent);
+            homeScore.textContent = currentScore - 1;
+            resetAssists('home');
+        } else {
+            let currentScore = Number(homeScore.textContent);
+            awayScore.textContent = currentScore - 1;
+            resetAssists('away');
+        }
+
+    }
+
     let card = Array.from(document.querySelectorAll('.player-card'))
         .find(c => c.dataset.player == playerNumber);
 
@@ -42,25 +58,64 @@ function decreaseStat(playerNumber, currentStat, modalStatElement) {
 function increaseStat(playerNumber, statName, modalStatElement) {
 
     let number = Number(modalStatElement.textContent) + 1;
-    modalStatElement.textContent = number;
+
+    //check for goals
+    if (statName == 'Goals') {
+        if (playerNumber <= 11) {
+            let currentScore = Number(homeScore.textContent);
+            homeScore.textContent = currentScore + 1;
+        } else {
+            let currentScore = Number(awayScore.textContent);
+            awayScore.textContent = currentScore + 1;
+        }
+        modalStatElement.textContent = number;
+        insertStat(modalStatElement, playerNumber, number);
+    } else if (statName == 'Assists') {
+        if (playerNumber <= 11) {
+            let currentScore = Number(homeScore.textContent);
+            let totalHomeAssists = 0;
+            let homeElement = document.querySelector('.home');
+            let homeAssistElements = Array.from(homeElement.querySelectorAll('input[name="Assists"]'));
+            homeAssistElements.forEach(hae => totalHomeAssists += Number(hae.value));
+
+            if (currentScore > totalHomeAssists) {
+                modalStatElement.textContent = number;
+                insertStat(modalStatElement, playerNumber, number);
+            }
+        } else {
+            let currentScore = Number(awayScore.textContent);
+
+            if (currentScore >= number) {
+                modalStatElement.textContent = number;
+                insertStat(modalStatElement, playerNumber, number);
+            }
+        }
+    } else {
+        modalStatElement.textContent = number;
+        insertStat(modalStatElement, playerNumber, number);
+    }
 
     let card = Array.from(document.querySelectorAll('.player-card'))
         .find(c => c.dataset.player == playerNumber);
 
-    console.log(card);
-
     let currentInput = card.querySelector(`input[name="${statName}"]`)
-    console.log(currentInput);
-    insertStat(modalStatElement, playerNumber, number);
 }
 
 function insertStat(statName, playerNumber, value) {
+    let stat = statName.dataset.stat;
     let cards = Array.from(document.querySelectorAll('.player-card'));
     let currentCard = cards.find(c => c.dataset.player == playerNumber);
-    let targetInput = currentCard.querySelector(`input[name="${statName.dataset.stat}"]`)
+    let targetInput = currentCard.querySelector(`input[name="${stat}"]`)
     console.log(targetInput);
     console.log(targetInput.value);
     targetInput.value = value;
+}
+
+function resetAssists(team) {
+    let modalAssistsElement = modalContainerElement.querySelector('p[name="Assists"]');
+    modalAssistsElement.textContent = 0;
+    let teamAssistElements = Array.from(document.querySelectorAll(`.${team}, input[name="Assists"]`));
+    teamAssistElements.forEach(i => i.value = 0);
 }
 
 closeElement.addEventListener('click', () => {
