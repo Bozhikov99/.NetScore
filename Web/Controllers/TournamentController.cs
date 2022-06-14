@@ -129,7 +129,15 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Play(CreateMatchModel model)
         {
-            await matchService.CreateMatch(model);
+            try
+            {
+                await matchService.CreateMatch(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return Ok();
         }
     }

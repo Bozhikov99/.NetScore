@@ -37,29 +37,31 @@ namespace Core.Services
 
             await repository.DeleteAsync<Fixture>(fixture.Id);
 
-            List<PlayerMatchStatistic> homePlayerMatchStatistics = await model.HomePlayerMatchStatistics
-                .AsQueryable()
-                .ProjectTo<PlayerMatchStatistic>(mapper.ConfigurationProvider)
-                .ToListAsync();
+            List<PlayerMatchStatistic> homePlayerMatchStatistics = new List<PlayerMatchStatistic>();
+            List<PlayerMatchStatistic> awayPlayerMatchStatistics = new List<PlayerMatchStatistic>();
+            //List<PlayerMatchStatistic> homePlayerMatchStatistics = await model.HomePlayerMatchStatistics
+            //    .AsQueryable()
+            //    .ProjectTo<PlayerMatchStatistic>(mapper.ConfigurationProvider)
+            //    .ToListAsync();
 
-            List<PlayerMatchStatistic> awayPlayerMatchStatistics = await model.AwayPlayerMatchStatistics
-                .AsQueryable()
-                .ProjectTo<PlayerMatchStatistic>(mapper.ConfigurationProvider)
-                .ToListAsync();
+            //List<PlayerMatchStatistic> awayPlayerMatchStatistics = await model.AwayPlayerMatchStatistics
+            //    .AsQueryable()
+            //    .ProjectTo<PlayerMatchStatistic>(mapper.ConfigurationProvider)
+            //    .ToListAsync();
+            //----------------------------------------------------------------------------------------------
+            foreach (CreatePlayerMatchStatisticModel m in model.HomePlayerMatchStatistics
+                .Where(p => p.TeamId == homeTeamId))
+            {
+                PlayerMatchStatistic currentPlayerStat = mapper.Map<PlayerMatchStatistic>(m);
+                homePlayerMatchStatistics.Add(currentPlayerStat);
+            }
 
-            //foreach (CreatePlayerMatchStatisticModel m in model.PlayerMatchStatistics
-            //    .Where(p => p.TeamId == homeTeamId))
-            //{
-            //    PlayerMatchStatistic currentPlayerStat = mapper.Map<PlayerMatchStatistic>(m);
-            //    homePlayerMatchStatistics.Add(currentPlayerStat);
-            //}
-
-            //foreach (CreatePlayerMatchStatisticModel m in model.PlayerMatchStatistics
-            //    .Where(p => p.TeamId == awayTeamId))
-            //{
-            //    PlayerMatchStatistic currentPlayerStat = mapper.Map<PlayerMatchStatistic>(m);
-            //    awayPlayerMatchStatistics.Add(currentPlayerStat);
-            //}
+            foreach (CreatePlayerMatchStatisticModel m in model.AwayPlayerMatchStatistics
+                .Where(p => p.TeamId == awayTeamId))
+            {
+                PlayerMatchStatistic currentPlayerStat = mapper.Map<PlayerMatchStatistic>(m);
+                awayPlayerMatchStatistics.Add(currentPlayerStat);
+            }
 
             //await repository.AddRangeAsync(homePlayerMatchStatistics);
             //await repository.AddRangeAsync(awayPlayerMatchStatistics);
@@ -70,6 +72,9 @@ namespace Core.Services
             homeStat.PlayerMatchStatistics = homePlayerMatchStatistics;
             awayStat.PlayerMatchStatistics = awayPlayerMatchStatistics;
 
+            await repository.AddRangeAsync(homePlayerMatchStatistics);
+            await repository.AddRangeAsync(awayPlayerMatchStatistics);
+            await repository.SaveChangesAsync();
             await repository.AddAsync(homeStat);
             await repository.AddAsync(awayStat);
 
