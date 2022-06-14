@@ -1,6 +1,7 @@
 ﻿@using Core.ViewModels.Player
 
 @{
+    string tournamentId = ViewBag.TournamentId;
     IEnumerable<ListPlayerModel> homePlayers = ViewBag.HomePlayers;
     IEnumerable<ListPlayerModel> awayPlayers = ViewBag.AwayPlayers;
 
@@ -13,11 +14,12 @@
     ListPlayerModel[] awayStrikers = awayPlayers.Where(p => p.Position == "Striker").ToArray();
     ListPlayerModel[] awayMidfielders = awayPlayers.Where(p => p.Position == "Midfielder").ToArray();
     ListPlayerModel[] awayGoalkeepers = awayPlayers.Where(p => p.Position == "GoalKeeper").ToArray();
+
 }
 
 <div class="row">
     <form class="row" asp-action="LoadMatch">
-        <input hidden name="tournamentId" value=@ViewBag.TournamentId />
+        <input hidden name="tournamentId" value=@tournamentId />
         <div class="col home">
             <h2>Home</h2>
             <h3>Keepers</h3>

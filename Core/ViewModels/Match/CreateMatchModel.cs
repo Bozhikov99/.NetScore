@@ -5,7 +5,9 @@ namespace Core.ViewModels.Match
 {
     public class CreateMatchModel
     {
-        public IEnumerable<CreatePlayerMatchStatisticModel> PlayerMatchStatistics { get; set; }
+        public IEnumerable<CreatePlayerMatchStatisticModel> HomePlayerMatchStatistics { get; set; }
+
+        public IEnumerable<CreatePlayerMatchStatisticModel> AwayPlayerMatchStatistics { get; set; }
 
         public CreateTeamMatchStatistic HomeTeamStatistics { get; set; }
 

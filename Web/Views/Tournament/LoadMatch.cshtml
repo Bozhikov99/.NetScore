@@ -32,13 +32,14 @@
             {
                 <div class="player-card home" data-player=@(playerCounter++)>
                     <img src=@p.ImageUrl style="width: 40px" />
-                    <h3 data-firstName=@p.FirstName >@p.LastName</h3>
+                    <h3 data-firstName=@p.FirstName>@p.LastName</h3>
                     <input hidden name="Goals" value=0 />
                     <input hidden name="Assists" value=0 />
                     <input hidden name="Passes" value=0 />
                     <input hidden name="Tackles" value=0 />
                     <input hidden name="Fouls" value=0 />
                     <input hidden name="Saves" value=0 />
+                    <input hidden name="PlayerId" value=@p.Id />
                 </div>
             }
         </div>
@@ -48,15 +49,16 @@
             <h2>@Model.AwayTeam.Name</h2>
             @foreach (ListPlayerModel p in Model.AwayPlayers)
             {
-               <div class="player-card away" data-player=@(playerCounter++)>
+                <div class="player-card away" data-player=@(playerCounter++)>
                     <img src=@p.ImageUrl style="width: 40px" />
-                    <h3 data-firstName=@p.FirstName >@p.LastName</h3>
+                    <h3 data-firstName=@p.FirstName>@p.LastName</h3>
                     <input hidden name="Goals" value=0 />
                     <input hidden name="Assists" value=0 />
                     <input hidden name="Passes" value=0 />
                     <input hidden name="Tackles" value=0 />
                     <input hidden name="Fouls" value=0 />
                     <input hidden name="Saves" value=0 />
+                    <input hidden name="PlayerId" value=@p.Id />
                 </div>
             }
         </div>
@@ -79,34 +81,134 @@
         <div id="assists" class="row">
             <span class="col text-center substract" style="color: red">-</span>
             <p class="col text-center">Assists</p>
-            <p class="col text-center stat" data-stat="Assists"  name="Assists">0</p>
+            <p class="col text-center stat" data-stat="Assists" name="Assists">0</p>
             <span class="col text-center add" style="color: green">+</span>
         </div>
         <div id="passes" class="row">
             <span class="col text-center substract" style="color: red">-</span>
             <p class="col text-center">Passes</p>
-            <p class="col text-center stat" data-stat="Passes"  name="Passes">0</p>
+            <p class="col text-center stat" data-stat="Passes" name="Passes">0</p>
             <span class="col text-center add" style="color: green">+</span>
         </div>
         <div id="tackles" class="row">
             <span class="col text-center substract" style="color: red">-</span>
             <p class="col text-center">Tackles</p>
-            <p class="col text-center stat" data-stat="Tackles"  name="Tackles">0</p>
+            <p class="col text-center stat" data-stat="Tackles" name="Tackles">0</p>
             <span class="col text-center add" style="color: green">+</span>
         </div>
         <div id="fouls" class="row">
             <span class="col text-center substract" style="color: red">-</span>
             <p class="col text-center">Fouls</p>
-            <p class="col text-center stat" data-stat="Fouls"  name="Fouls">0</p>
+            <p class="col text-center stat" data-stat="Fouls" name="Fouls">0</p>
             <span class="col text-center add" style="color: green">+</span>
         </div>
         <div id="saves" class="row">
             <span class="col text-center substract" style="color: red">-</span>
             <p class="col text-center">Saves</p>
             <p class="col text-center stat" data-stat="Saves" name="Saves">0</p>
-            <span  class="col text-center add" style="color: green">+</span>
+            <span class="col text-center add" style="color: green">+</span>
         </div>
     </div>
 </div>
 
+<button id="End">End Match</button>
+
 <script type="module" src="~/js/match.js"></script>
+
+<script type="text/javascript">
+    let endButtonElement=document.querySelector('#End');
+    let matchCode='@Model.MatchCode';
+    let homeTeamId='@Model.HomeTeam.Id';
+    let awayTeamId='@Model.AwayTeam.Id';
+    let tournamentId='@Model.TournamentId';
+    //Submit player stats
+    endButtonElement.addEventListener('click', ()=>{
+        //let homePlayerCards=document;
+        let homePlayerStats=[];
+        let awayPlayerStats=[];
+
+        let playerCardElements=Array.from(document.querySelectorAll('.player-card'));
+        let homePlayerCardElements=playerCardElements.filter(c=>c.classList.contains('home'));
+        let awayPlayerCardElements=playerCardElements.filter(c=>c.classList.contains('away'));
+
+        homePlayerCardElements.forEach(hpce=>{
+            let Goals=Number(hpce.querySelector('input[name="Goals"]').value);
+            let Assists=Number(hpce.querySelector('input[name="Assists"]').value);
+            let Passes=Number(hpce.querySelector('input[name="Passes"]').value);
+            let Tackles=Number(hpce.querySelector('input[name="Tackles"]').value);
+            let Fouls=Number(hpce.querySelector('input[name="Fouls"]').value);
+            let Saves=Number(hpce.querySelector('input[name="Saves"]').value);
+            let PlayerId=hpce.querySelector('input[name="PlayerId"]').value;
+
+            let currentStatisticObject={
+                Goals,
+                Assists,
+                Passes,
+                Tackles,
+                Fouls,
+                Saves,
+                MatchCode: matchCode,
+                TeamId: homeTeamId,
+                PlayerId
+            }
+
+            homePlayerStats.push(currentStatisticObject);
+        });
+
+        awayPlayerCardElements.forEach(apce=>{
+            let Goals=Number(apce.querySelector('input[name="Goals"]').value);
+            let Assists=Number(apce.querySelector('input[name="Assists"]').value);
+            let Passes=Number(apce.querySelector('input[name="Passes"]').value);
+            let Tackles=Number(apce.querySelector('input[name="Tackles"]').value);
+            let Fouls=Number(apce.querySelector('input[name="Fouls"]').value);
+            let Saves=Number(apce.querySelector('input[name="Saves"]').value);
+            let PlayerId=apce.querySelector('input[name="PlayerId"]').value;
+
+            let currentStatisticObject={
+                Goals,
+                Assists,
+                Passes,
+                Tackles,
+                Fouls,
+                Saves,
+                MatchCode: matchCode,
+                TeamId: awayTeamId,
+                PlayerId
+
+            }
+
+            awayPlayerStats.push(currentStatisticObject);
+        });
+
+        let homeGoals=Number(document.querySelector('#home-goals').textContent);
+        let awayGoals=Number(document.querySelector('#away-goals').textContent);
+        let isHomeWinner=homeGoals>awayGoals;
+        let isAwayWinner=homeGoals<=awayGoals;
+
+        let HomeTeamStatistics={
+            TeamId: homeTeamId,
+            Goals: homeGoals,
+            MatchCode: `${matchCode}-HOME`,
+            IsWinner: isHomeWinner,
+            TournamentId: tournamentId
+        }
+
+        let AwayTeamStatistics={
+            TeamId: awayTeamId,
+            Goals: awayGoals,
+            MatchCode: `${matchCode}-AWAY`,
+            IsWinner: isAwayWinner,
+            TournamentId: tournamentId
+        }
+
+        let matchModel={
+            HomeTeamStatistics,
+            AwayTeamStatistics,
+            MatchCode: matchCode,
+            HomePlayerMatchStatistics: homePlayerStats,
+            AwayPlayerMatchStatistics: awayPlayerStats
+        }
+
+        console.log(matchModel);
+    });
+</script>
