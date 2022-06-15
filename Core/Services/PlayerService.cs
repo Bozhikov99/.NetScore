@@ -35,7 +35,10 @@ namespace Core.Services
 
         public async Task<PlayerDetailsModel> Details(string id)
         {
-            Player player = await repository.GetByIdAsync<Player>(id);
+            Player player = await repository.All<Player>()
+                .Include(t => t.Statistics)
+                .FirstAsync(p => p.Id == id);
+
             PlayerDetailsModel details = mapper.Map<PlayerDetailsModel>(player);
 
             return details;
