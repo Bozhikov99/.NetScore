@@ -12,5 +12,9 @@ namespace Core.Services
         Task<LoadedMatchModel> LoadMatch(string[] homeIds, string[] awayIds, string tournamentId);
 
         Task CreateMatch(CreateMatchModel model);
+
+        Task<IEnumerable<ListMatchModel>> GetMatches(string tournamentId);
+
+        Task<MatchFactsModel> GetMatchFacts(string matchCode);
     }
 }

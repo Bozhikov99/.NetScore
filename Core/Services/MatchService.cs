@@ -26,6 +26,93 @@ namespace Core.Services
             this.mapper = mapper;
         }
 
+        public async Task<IEnumerable<ListMatchModel>> GetMatches(string tournamentId)
+        {
+            IEnumerable<TeamMatchStatistic> statistics = await repository.All<TeamMatchStatistic>(tms => tms.TournamentId == tournamentId)
+                .Include(tms => tms.PlayerMatchStatistics)
+                .ToArrayAsync();
+
+            List<ListMatchModel> matches = new List<ListMatchModel>();
+
+            foreach (TeamMatchStatistic tms in statistics.Take(statistics.Count() / 2))
+            {
+                TeamMatchStatistic homeStat = tms;
+                TeamMatchStatistic awayStat = statistics.First(
+                    stat => stat.Id != homeStat.Id &&
+                    stat.MatchCode.Contains(homeStat
+                        .MatchCode.Substring(0, 30)));
+
+                string matchCode = homeStat.MatchCode.Substring(0, homeStat.MatchCode.Length - 5);
+
+                Team homeTeam = await repository.GetByIdAsync<Team>(homeStat.TeamId);
+                Team awayTeam = await repository.GetByIdAsync<Team>(awayStat.TeamId);
+
+                ListMatchModel match = new ListMatchModel()
+                {
+                    MatchCode = matchCode,
+                    HomeTeamScore = homeStat.Goals,
+                    AwayTeamScore = awayStat.Goals,
+                    HomeTeamLogo = homeTeam.LogoUrl,
+                    AwayTeamLogo = awayTeam.LogoUrl,
+                    HomeTeamName = homeTeam.Name,
+                    AwayTeamName = awayTeam.Name
+                };
+
+                matches.Add(match);
+            }
+
+            return matches;
+        }
+
+        public async Task<MatchFactsModel> GetMatchFacts(string matchCode)
+        {
+            TeamMatchStatistic homeStats = await repository.All<TeamMatchStatistic>(
+                    tms => tms.MatchCode == $"{matchCode}-HOME")
+                .Include(tms => tms.PlayerMatchStatistics)
+                .FirstAsync();
+
+            TeamMatchStatistic awayStats = await repository.All<TeamMatchStatistic>(
+                    tms => tms.MatchCode == $"{matchCode}-AWAY")
+                .Include(tms => tms.PlayerMatchStatistics)
+                .FirstAsync();
+
+            ArgumentNullException.ThrowIfNull(awayStats);
+            ArgumentNullException.ThrowIfNull(homeStats);
+
+            Team homeTeam = await repository.GetByIdAsync<Team>(homeStats.TeamId);
+            Team awayTeam = await repository.GetByIdAsync<Team>(awayStats.TeamId);
+
+            TeamMatchFactsModel homeFacts = new TeamMatchFactsModel()
+            {
+                LogoUrl = homeTeam.LogoUrl,
+                Goals = homeStats.PlayerMatchStatistics.Sum(pms => pms.Goals),
+                Assists = homeStats.PlayerMatchStatistics.Sum(pms => pms.Assists),
+                Passes = homeStats.PlayerMatchStatistics.Sum(pms => pms.Passes),
+                Fouls = homeStats.PlayerMatchStatistics.Sum(pms => pms.Fouls),
+                Saves = homeStats.PlayerMatchStatistics.Sum(pms => pms.Saves),
+                Tackles = homeStats.PlayerMatchStatistics.Sum(pms => pms.Tackles)
+            };
+
+            TeamMatchFactsModel awayFacts = new TeamMatchFactsModel()
+            {
+                LogoUrl = awayTeam.LogoUrl,
+                Goals = awayStats.PlayerMatchStatistics.Sum(pms => pms.Goals),
+                Assists = awayStats.PlayerMatchStatistics.Sum(pms => pms.Assists),
+                Passes = awayStats.PlayerMatchStatistics.Sum(pms => pms.Passes),
+                Fouls = awayStats.PlayerMatchStatistics.Sum(pms => pms.Fouls),
+                Saves = awayStats.PlayerMatchStatistics.Sum(pms => pms.Saves),
+                Tackles = awayStats.PlayerMatchStatistics.Sum(pms => pms.Tackles)
+            };
+
+            MatchFactsModel matchFacts = new MatchFactsModel()
+            {
+                HomeFacts = homeFacts,
+                AwayFacts = awayFacts
+            };
+
+            return matchFacts;
+        }
+
         public async Task CreateMatch(CreateMatchModel model)
         {
             string homeTeamId = model.HomeTeamStatistics.TeamId;

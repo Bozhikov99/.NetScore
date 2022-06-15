@@ -65,7 +65,9 @@ namespace Web.Controllers
             TournamentDetailsModel details = await tournamentService.GetDetails(id);
             IEnumerable<ListTeamModel> teams = await teamService.GetTeamsForTournament(id);
             IEnumerable<ListFixtureModel> fixtures = await tournamentService.GetFixtures(id);
+            IEnumerable<ListMatchModel> matches = await matchService.GetMatches(id);
 
+            ViewBag.Matches = matches;
             ViewBag.Teams = teams;
             ViewBag.Fixtures = fixtures;
 
@@ -81,6 +83,24 @@ namespace Web.Controllers
             ViewBag.TournamentId = id;
 
             return View();
+        }
+
+        public async Task<IActionResult> MatchFacts(string matchCode)
+        {
+            try
+            {
+                MatchFactsModel model = await matchService.GetMatchFacts(matchCode);
+                return View(model);
+            }
+            catch (ArgumentNullException ae)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
         }
 
         //public async Task<IActionResult> Match(string homeId, string awayId)

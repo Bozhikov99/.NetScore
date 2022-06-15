@@ -29,6 +29,24 @@
     }
 </div>
 
+@foreach (var m in @ViewBag.Matches)
+{
+    <a asp-action="MatchFacts" asp-route-matchCode=@m.MatchCode>
+        <div class="row">
+            <div class="col row">
+                <div class="col row">
+                    @*<img class="col" src=@m.HomeTeamLogo />*@
+                    <div class="col">@m.HomeTeamName</div>
+                </div>
+                <div class="col">@m.HomeTeamScore - @m.AwayTeamScore</div>
+                <div class="col row">
+                    @*<img class="col" src=@m.AwayTeamLogo />*@
+                    <div class="col">@m.AwayTeamName</div>
+                </div>
+            </div>
+        </div>
+    </a>
+}
 
 @if (!Model.IsScheduled && Model.IsActive)
 {

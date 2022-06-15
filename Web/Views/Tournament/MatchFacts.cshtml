@@ -1,0 +1,88 @@
+﻿@using Core.ViewModels.Match
+@model MatchFactsModel
+
+@{
+    TeamMatchFactsModel awayFacts = Model.AwayFacts;
+    TeamMatchFactsModel homeFacts = Model.HomeFacts;
+}
+
+<link rel="stylesheet" href="~/css/match-facts.css" />
+
+<div class="row">
+    <div class="col">
+        <div class="logo-wrapper">
+            <img src=@homeFacts.LogoUrl />
+        </div>
+    </div>
+    <div class="col">@homeFacts.Goals - @awayFacts.Goals</div>
+    <div class="col">
+        <div class="logo-wrapper">
+            <img src=@awayFacts.LogoUrl />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="row col">
+        <div class="row">
+            @homeFacts.Goals
+        </div>
+        <div class="row">
+            @homeFacts.Assists
+        </div>
+
+        <div class="row">
+            @homeFacts.Passes
+        </div>
+        <div class="row">
+            @homeFacts.Tackles
+        </div>
+        <div class="row">
+            @homeFacts.Fouls
+        </div>
+        <div class="row">
+            @homeFacts.Saves
+        </div>
+    </div>
+    <div class="row col">
+        <div class="row">
+            Goals
+        </div>
+        <div class="row">
+            Assists
+        </div>
+
+        <div class="row">
+            Passes
+        </div>
+        <div class="row">
+            Tackles
+        </div>
+        <div class="row">
+            Fouls
+        </div>
+        <div class="row">
+            Saves
+        </div>
+    </div>
+    <div class="row col">
+        <div class="row">
+            @awayFacts.Goals
+        </div>
+        <div class="row">
+            @awayFacts.Assists
+        </div>
+
+        <div class="row">
+            @awayFacts.Passes
+        </div>
+        <div class="row">
+            @awayFacts.Tackles
+        </div>
+        <div class="row">
+            @awayFacts.Fouls
+        </div>
+        <div class="row">
+            @awayFacts.Saves
+        </div>
+    </div>
+</div>
