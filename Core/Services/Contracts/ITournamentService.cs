@@ -1,4 +1,5 @@
 ﻿using Core.ViewModels.Fixture;
+using Core.ViewModels.Team;
 using Core.ViewModels.Tournament;
 
 namespace Core.Services.Contracts
@@ -18,5 +19,7 @@ namespace Core.Services.Contracts
         Task<TournamentDetailsModel> GetDetails(string id);
 
         Task<IEnumerable<ListFixtureModel>> GetFixtures(string id);
+
+        Task<ListTeamModel> GetWinner(string id);
     }
 }

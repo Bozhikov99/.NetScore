@@ -10,6 +10,11 @@
 
 <div class="container">
     <h1 class="text-center">@Model.Name</h1>
+    @if (ViewBag.Winner != null)
+    {
+        <div class="clarify-div text-center">Winner</div>
+        <div class="text-center team-name align-middle mb-3">@ViewBag.Winner.Name</div>
+    }
     <div class="clarify-div text-center">Fixtures</div>
     <div class="container">
 
@@ -19,6 +24,10 @@
             <a class="d-flex justify-content-center" asp-action="Schedule" asp-route-id=@Model.Id>
                 <button id="schedule" class="play-button">Schedule</button>
             </a>
+        }
+        else if(!Model.IsActive)
+        {
+                   <div class="text-center team-name align-middle mb-3">None</div>
         }
         else
         {

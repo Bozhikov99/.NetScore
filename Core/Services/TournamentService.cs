@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Core.Services.Contracts;
 using Core.ViewModels.Fixture;
+using Core.ViewModels.Team;
 using Core.ViewModels.Tournament;
 using Infrastructure.Common;
 using Infrastructure.Models;
@@ -104,6 +105,22 @@ namespace Core.Services
             Tournament tournament = await repository.GetByIdAsync<Tournament>(id);
 
             return tournament.IsActive;
+        }
+
+        public async Task<ListTeamModel> GetWinner(string id)
+        {
+            Tournament tournament = await repository.All<Tournament>()
+                .Include(t => t.TeamMatchStatistics)
+                .FirstAsync(t => t.Id == id);
+
+            Team winner = await repository.All<Team>()
+                .Include(t => t.TeamMatchStatistics)
+                .Where(t => !t.TeamMatchStatistics.Any(tms => tms.Id == id && !tms.IsWinner))
+                .FirstAsync();
+
+            ListTeamModel model = mapper.Map<ListTeamModel>(winner);
+
+            return model;
         }
     }
 }

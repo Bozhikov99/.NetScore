@@ -73,6 +73,12 @@ namespace Web.Controllers
             IEnumerable<ListFixtureModel> fixtures = await tournamentService.GetFixtures(id);
             IEnumerable<ListMatchModel> matches = await matchService.GetMatches(id);
 
+            if (!details.IsActive)
+            {
+                ListTeamModel winner = await tournamentService.GetWinner(id);
+                ViewBag.Winner = winner;
+            }
+
             ViewBag.Matches = matches;
             ViewBag.Teams = teams;
             ViewBag.Fixtures = fixtures;
