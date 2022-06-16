@@ -61,5 +61,93 @@ body {
     position: fixed;
     font-size: 1rem;
     border: none;
-    background:none;
+    background: none;
+}
+
+.home-wrapper {
+    width: 14rem;
+    padding: 1.1rem;
+}
+
+    .home-wrapper img {
+        width: 100%;
+    }
+
+.nav-link {
+    font-size: 1.5rem;
+}
+
+    .nav-link:hover {
+        text-decoration: underline;
+        text-decoration-color: #008143;
+    }
+
+.auth-button {
+    color: white;
+    background-color: #008143;
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 1.3rem;
+    padding: 0.3rem;
+    padding-bottom: 0.4rem;
+    margin-top: 0.45rem;
+}
+
+.auth-list {
+    padding-right: 3rem;
+}
+
+.nav-hyper {
+    padding-top: 1.2rem;
+    font-weight: 600;
+}
+
+.hyper-container {
+    padding-left: 5rem;
+}
+
+.tournament-card {
+    width: 100%;
+    background-color: #008143;
+    color: white;
+    margin-bottom: 1rem;
+    border-radius: 0.3rem;
+}
+
+    .tournament-card i {
+        float: right;
+    }
+
+.container-tournament {
+    justify-content: center;
+    width: 40%;
+}
+
+    .container-tournament button {
+        position: relative;
+        left: 39%;
+        margin: 2rem 0;
+    }
+
+        .container-tournament button:hover {
+            background-color: #4ac389;
+        }
+
+.anchor-light {
+    color: white;
+    text-decoration: none;
+}
+
+    .anchor-light:hover {
+        color: white;
+        text-decoration: underline;
+        text-decoration-color: white;
+    }
+
+.button-dark {
+    color: white;
+    background-color: #008143;
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 1.3rem;
 }
