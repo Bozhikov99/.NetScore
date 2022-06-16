@@ -1,0 +1,18 @@
+﻿.player-card {
+    background-color: #4ac389;
+    width: 40%;
+    margin-bottom: 2rem;
+    min-height: 7rem;
+}
+
+    .player-card .col-5 {
+        padding: 0 0.3rem;
+    }
+
+        .player-card .col-5 img {
+            height: 80%;
+        }
+
+.player-name {
+    font-weight: 600;
+}

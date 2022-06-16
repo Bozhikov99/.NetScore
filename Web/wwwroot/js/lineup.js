@@ -54,6 +54,7 @@ function checkStartingPLayers(homeCheckboxes, awayCheckboxes) {
 
     if (areCountsValid && areTeamsValid) {
         submitButtonElement.removeAttribute('disabled');
+        submitButtonElement.style.backgroundColor = "#008143";
     } else {
         console.log('Home and Away starting players must be 11')
         submitButtonElement.setAttribute('disabled', 'true');
