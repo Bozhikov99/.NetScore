@@ -33,12 +33,12 @@ function decreaseStat(playerNumber, currentStat, modalStatElement) {
 
     //check for goals
     if (currentStat == 'Goals') {
-        if (playerNumber <= 11) {
+        if (playerNumber < 11) {
             let currentScore = Number(homeScore.textContent);
             homeScore.textContent = currentScore - 1;
             resetAssists('home');
         } else {
-            let currentScore = Number(homeScore.textContent);
+            let currentScore = Number(awayScore.textContent);
             awayScore.textContent = currentScore - 1;
             resetAssists('away');
         }
@@ -61,7 +61,7 @@ function increaseStat(playerNumber, statName, modalStatElement) {
 
     //check for goals
     if (statName == 'Goals') {
-        if (playerNumber <= 11) {
+        if (playerNumber < 11) {
             let currentScore = Number(homeScore.textContent);
             homeScore.textContent = currentScore + 1;
         } else {
