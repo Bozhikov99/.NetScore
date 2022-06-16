@@ -13,5 +13,7 @@ namespace Common.ErrorMessageConstants
         public const string EMPTY_FIXTURE = "Empty fixture";
         public const string ALREADY_SCHEDULED = "The tournament is already scheduled";
         public const string NOT_ACTIVE = "The tournament is over";
+        public const string INVALID_HOME_STATS = "Home team statistic does not exist";
+        public const string INVALID_AWAY_STATS = "Away team statistic does not exist";
     }
 }

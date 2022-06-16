@@ -100,11 +100,11 @@ namespace Web.Controllers
             }
             catch (ArgumentNullException ae)
             {
-                throw;
+                return View("Error", ae.Message);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw;
+                return View("Error", TournamentErrorConstants.UNEXPECTED_FACTS);
             }
 
         }

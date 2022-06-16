@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Common.ErrorMessageConstants;
 using Core.ViewModels.Match;
 using Core.ViewModels.Player;
 using Core.ViewModels.PlayerMatchStatistic;
@@ -76,8 +77,8 @@ namespace Core.Services
                 .Include(tms => tms.PlayerMatchStatistics)
                 .FirstAsync();
 
-            ArgumentNullException.ThrowIfNull(awayStats);
-            ArgumentNullException.ThrowIfNull(homeStats);
+            ArgumentNullException.ThrowIfNull(awayStats, TournamentErrorConstants.INVALID_HOME_STATS);
+            ArgumentNullException.ThrowIfNull(homeStats, TournamentErrorConstants.INVALID_AWAY_STATS);
 
             Team homeTeam = await repository.GetByIdAsync<Team>(homeStats.TeamId);
             Team awayTeam = await repository.GetByIdAsync<Team>(awayStats.TeamId);
