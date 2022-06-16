@@ -8,81 +8,84 @@
 
 <link rel="stylesheet" href="~/css/match-facts.css" />
 
-<div class="row">
-    <div class="col">
-        <div class="logo-wrapper">
-            <img src=@homeFacts.LogoUrl />
+<div class="container">
+    <div class="clarify-div text-center">Match facts</div>
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <div class="logo-wrapper">
+                <img src=@homeFacts.LogoUrl />
+            </div>
+        </div>
+        <div class="col d-flex justify-content-center">@homeFacts.Goals - @awayFacts.Goals</div>
+        <div class="col d-flex justify-content-center">
+            <div class="logo-wrapper">
+                <img src=@awayFacts.LogoUrl />
+            </div>
         </div>
     </div>
-    <div class="col">@homeFacts.Goals - @awayFacts.Goals</div>
-    <div class="col">
-        <div class="logo-wrapper">
-            <img src=@awayFacts.LogoUrl />
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="row col">
-        <div class="row">
-            @homeFacts.Goals
-        </div>
-        <div class="row">
-            @homeFacts.Assists
-        </div>
+    <div class="row ">
+        <div class="row col">
+            <div class="row d-flex justify-content-center">
+                @homeFacts.Goals
+            </div>
+            <div class="row d-flex justify-content-center">
+                @homeFacts.Assists
+            </div>
 
-        <div class="row">
-            @homeFacts.Passes
+            <div class="row d-flex justify-content-center">
+                @homeFacts.Passes
+            </div>
+            <div class="row d-flex justify-content-center">
+                @homeFacts.Tackles
+            </div>
+            <div class="row d-flex justify-content-center">
+                @homeFacts.Fouls
+            </div>
+            <div class="row d-flex justify-content-center">
+                @homeFacts.Saves
+            </div>
         </div>
-        <div class="row">
-            @homeFacts.Tackles
-        </div>
-        <div class="row">
-            @homeFacts.Fouls
-        </div>
-        <div class="row">
-            @homeFacts.Saves
-        </div>
-    </div>
-    <div class="row col">
-        <div class="row">
-            Goals
-        </div>
-        <div class="row">
-            Assists
-        </div>
+        <div class="row col">
+            <div class="row d-flex justify-content-center">
+                Goals
+            </div>
+            <div class="row d-flex justify-content-center">
+                Assists
+            </div>
 
-        <div class="row">
-            Passes
+            <div class="row d-flex justify-content-center">
+                Passes
+            </div>
+            <div class="row d-flex justify-content-center">
+                Tackles
+            </div>
+            <div class="row d-flex justify-content-center">
+                Fouls
+            </div>
+            <div class="row d-flex justify-content-center">
+                Saves
+            </div>
         </div>
-        <div class="row">
-            Tackles
-        </div>
-        <div class="row">
-            Fouls
-        </div>
-        <div class="row">
-            Saves
-        </div>
-    </div>
-    <div class="row col">
-        <div class="row">
-            @awayFacts.Goals
-        </div>
-        <div class="row">
-            @awayFacts.Assists
-        </div>
+        <div class="row col">
+            <div class="row d-flex justify-content-center">
+                @awayFacts.Goals
+            </div>
+            <div class="row d-flex justify-content-center">
+                @awayFacts.Assists
+            </div>
 
-        <div class="row">
-            @awayFacts.Passes
-        </div>
-        <div class="row">
-            @awayFacts.Tackles
-        </div>
-        <div class="row">
-            @awayFacts.Fouls
-        </div>
-        <div class="row">
-            @awayFacts.Saves
+            <div class="row d-flex justify-content-center">
+                @awayFacts.Passes
+            </div>
+            <div class="row d-flex justify-content-center">
+                @awayFacts.Tackles
+            </div>
+            <div class="row d-flex justify-content-center">
+                @awayFacts.Fouls
+            </div>
+            <div class="row d-flex justify-content-center">
+                @awayFacts.Saves
+            </div>
         </div>
     </div>
 </div>
