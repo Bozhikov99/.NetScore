@@ -1,4 +1,5 @@
-﻿using Core.Services.Contracts;
+﻿using Common.ErrorMessageConstants;
+using Core.Services.Contracts;
 using Core.ViewModels.Fixture;
 using Core.ViewModels.Player;
 using Core.ViewModels.Team;
@@ -43,10 +44,17 @@ namespace Web.Controllers
 
         public async Task<IActionResult> AddPlayers(string id)
         {
-            IEnumerable<ListPlayerModel> players = await playerService.GetFreeAgents();
-            ViewBag.TeamId = id;
+            try
+            {
+                IEnumerable<ListPlayerModel> players = await playerService.GetFreeAgents();
+                ViewBag.TeamId = id;
 
-            return View(players);
+                return View(players);
+            }
+            catch (Exception)
+            {
+                return View("Error", TeamErrorConstats.UNEXPECTED_ADDING_PLAYERS);
+            }
         }
 
         public async Task<IActionResult> Details(string id)
@@ -86,10 +94,13 @@ namespace Web.Controllers
             {
                 await teamService.Edit(model);
             }
+            catch (ArgumentException ae)
+            {
+                return View("Error", ae.Message);
+            }
             catch (Exception)
             {
-
-                throw;
+                return View("Error", TeamErrorConstats.UNEXPECTED_EDITING);
             }
 
             return RedirectToAction(nameof(All));
@@ -102,10 +113,13 @@ namespace Web.Controllers
             {
                 await teamService.Create(model);
             }
+            catch (ArgumentException ae)
+            {
+                return View("Error", ae.Message);
+            }
             catch (Exception)
             {
-
-                throw;
+                return View("Error", TeamErrorConstats.UNEXPECTED_CREATING);
             }
 
             return RedirectToAction(nameof(All));

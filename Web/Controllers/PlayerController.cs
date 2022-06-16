@@ -1,4 +1,5 @@
-﻿using Common.ValidationConstants;
+﻿using Common.ErrorMessageConstants;
+using Common.ValidationConstants;
 using Core.Services.Contracts;
 using Core.ViewModels.Player;
 using Microsoft.AspNetCore.Mvc;
@@ -37,9 +38,16 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Details(string id)
         {
-            PlayerDetailsModel details = await playerService.Details(id);
+            try
+            {
+                PlayerDetailsModel details = await playerService.Details(id);
 
-            return View(details);
+                return View(details);
+            }
+            catch (Exception)
+            {
+                return View("Error", CommonErrorConstants.UNEXTECTED_ERROR);
+            }
         }
 
         [HttpPost]
@@ -50,8 +58,15 @@ namespace Web.Controllers
                 return View();
             }
 
-            await playerService.Create(model);
-            return RedirectToAction(nameof(All));
+            try
+            {
+                await playerService.Create(model);
+                return RedirectToAction(nameof(All));
+            }
+            catch (Exception)
+            {
+                return View("Error", PlayerErrorConstants.UNEXPECTED_CREATING);
+            }
         }
 
         [HttpPost]
@@ -62,8 +77,15 @@ namespace Web.Controllers
                 return View();
             }
 
-            await playerService.Edit(model);
-            return RedirectToAction(nameof(All));
+            try
+            {
+                await playerService.Edit(model);
+                return RedirectToAction(nameof(All));
+            }
+            catch (Exception)
+            {
+                return View("Error", PlayerErrorConstants.UNEXPECTED_EDITING);
+            }
         }
 
         public async Task<IActionResult> Delete(string id)

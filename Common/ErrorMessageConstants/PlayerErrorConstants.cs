@@ -8,6 +8,7 @@ namespace Common.ErrorMessageConstants
 {
     public class PlayerErrorConstants
     {
-        
+        public const string UNEXPECTED_CREATING = "Unexpected error creating a player";
+        public const string UNEXPECTED_EDITING = "Unexpected error editing a player";
     }
 }

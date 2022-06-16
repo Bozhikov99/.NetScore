@@ -1,4 +1,5 @@
-﻿using Core.Services;
+﻿using Common.ErrorMessageConstants;
+using Core.Services;
 using Core.Services.Contracts;
 using Core.ViewModels.Fixture;
 using Core.ViewModels.Match;
@@ -103,13 +104,6 @@ namespace Web.Controllers
 
         }
 
-        //public async Task<IActionResult> Match(string homeId, string awayId)
-        //{
-
-
-        //    return View();
-        //}
-
         [HttpPost]
         public async Task<IActionResult> Create(CreateTournamentModel model)
         {
@@ -120,7 +114,15 @@ namespace Web.Controllers
 
                 return View();
             }
-            await tournamentService.Create(model);
+
+            try
+            {
+                await tournamentService.Create(model);
+            }
+            catch (Exception)
+            {
+                return View("Error", string.Format(TournamentErrorConstants.UNEXPECTED_CREATE, model.Name));
+            }
 
             return RedirectToAction(nameof(All));
         }
@@ -133,7 +135,15 @@ namespace Web.Controllers
             {
                 throw new ArgumentNullException("Empty fixture");
             }
-            await tournamentService.Schedule(schedule);
+
+            try
+            {
+                await tournamentService.Schedule(schedule);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return Ok();
         }
@@ -141,9 +151,15 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> LoadMatch(string[] homeIds, string[] awayIds, string tournamentId)
         {
-            LoadedMatchModel match = await matchService.LoadMatch(homeIds, awayIds, tournamentId);
-
-            return View(match);
+            try
+            {
+                LoadedMatchModel match = await matchService.LoadMatch(homeIds, awayIds, tournamentId);
+                return View(match);
+            }
+            catch (Exception)
+            {
+                return View("Error", TournamentErrorConstants.UNEXPECTED_LOADING_MATCH);
+            }
         }
 
         [HttpPost]
@@ -155,7 +171,6 @@ namespace Web.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
             return Ok();

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Common.ErrorMessageConstants;
 using Core.Services.Contracts;
 using Core.ViewModels.Player;
 using Core.ViewModels.Team;
@@ -33,6 +34,8 @@ namespace Core.Services
 
         public async Task Create(CreateTeamModel model)
         {
+            ValidateName(model.Name);
+
             Team team = mapper.Map<Team>(model);
 
             await TransferPlayers(team, model.PlayerIds);
@@ -67,6 +70,8 @@ namespace Core.Services
 
         public async Task Edit(EditTeamModel model)
         {
+            ValidateName(model.Name);
+
             Team team = mapper.Map<Team>(model);
 
             repository.Update(team);
@@ -161,6 +166,17 @@ namespace Core.Services
 
 
             return teams;
+        }
+
+        private void ValidateName(string name)
+        {
+            bool isExisting = repository.All<Team>(t => t.Name == name)
+                .Any();
+
+            if (isExisting)
+            {
+                throw new ArgumentException(string.Format(TeamErrorConstats.TEAM_EXISTS, name));
+            }
         }
     }
 }
