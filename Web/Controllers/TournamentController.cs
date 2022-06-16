@@ -47,10 +47,15 @@ namespace Web.Controllers
         public async Task<IActionResult> Schedule(string id)
         {
             bool isScheduled = await tournamentService.IsScheduled(id);
+            bool isActive = await tournamentService.IsActive(id);
 
             if (isScheduled)
             {
-                return RedirectToAction("Error");
+                return View("Error", TournamentErrorConstants.ALREADY_SCHEDULED);
+            }
+            if (!isActive)
+            {
+                return View("Error", TournamentErrorConstants.NOT_ACTIVE);
             }
 
             IEnumerable<ListTeamModel> teams = await teamService.GetUndefeatedForTournament(id);
@@ -133,7 +138,7 @@ namespace Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                throw new ArgumentNullException("Empty fixture");
+                throw new ArgumentNullException(TournamentErrorConstants.EMPTY_FIXTURE);
             }
 
             try

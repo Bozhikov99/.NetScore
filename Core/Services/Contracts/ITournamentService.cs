@@ -11,6 +11,8 @@ namespace Core.Services.Contracts
 
         Task<bool> IsScheduled(string id);
 
+        Task<bool> IsActive(string id);
+
         Task<IEnumerable<ListTournamentModel>> GetAll();
 
         Task<TournamentDetailsModel> GetDetails(string id);

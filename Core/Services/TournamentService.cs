@@ -91,9 +91,19 @@ namespace Core.Services
 
         public async Task<bool> IsScheduled(string id)
         {
-            Tournament tournament = await repository.GetByIdAsync<Tournament>(id);
+            Tournament tournament = await repository.All<Tournament>()
+                .Include(t => t.TeamMatchStatistics)
+                .Include(t => t.Fixtures)
+                .FirstAsync(t => t.Id == id);
 
             return tournament.TeamMatchStatistics.Any() && tournament.Fixtures.Any();
+        }
+
+        public async Task<bool> IsActive(string id)
+        {
+            Tournament tournament = await repository.GetByIdAsync<Tournament>(id);
+
+            return tournament.IsActive;
         }
     }
 }
