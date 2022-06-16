@@ -1,0 +1,27 @@
+﻿.tournament-card {
+    width: 100%;
+    background-color: #008143;
+    color: white;
+    margin-bottom: 1rem;
+    border-radius: 0.3rem;
+}
+
+    .tournament-card i {
+        float: right;
+    }
+
+.container-tournament {
+    justify-content: center;
+    width: 40%;
+}
+
+    .container-tournament button {
+        position: relative;
+        left: 39%;
+        margin: 2rem 0;
+    }
+
+        .container-tournament button:hover {
+            background-color: #4ac389;
+        }
+

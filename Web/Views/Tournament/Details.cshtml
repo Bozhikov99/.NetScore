@@ -6,75 +6,84 @@
     ViewData["Title"] = "Details";
     IEnumerable<ListTeamModel> teams = ViewBag.Teams;
 }
+<link rel="stylesheet" href="~/css/tournament-details.css" asp-append-version="true" />
 
-<h1>Details</h1>
+<div class="container">
+    <h1 class="text-center">@Model.Name</h1>
+    <div class="clarify-div text-center">Fixtures</div>
+    <div class="container">
 
-<div>
-    <h4>Tournament</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
-    @foreach (ListTeamModel t in teams)
-    {
-        <div style="background-color: @t.Color">
-            <img src=@t.LogoUrl />
-            <h3>@t.Name</h3>
-        </div>
-    }
-</div>
 
-@foreach (var m in @ViewBag.Matches)
-{
-    <a asp-action="MatchFacts" asp-route-matchCode=@m.MatchCode>
-        <div class="row">
-            <div class="col row">
-                <div class="col row">
-                    <div class="col">@m.HomeTeamName</div>
-                </div>
-                <div class="col">@m.HomeTeamScore - @m.AwayTeamScore</div>
-                <div class="col row">
-                    <div class="col">@m.AwayTeamName</div>
-                </div>
-            </div>
-        </div>
-    </a>
-}
-
-@if (!Model.IsScheduled && Model.IsActive)
-{
-    <a asp-action="Schedule" asp-route-id=@Model.Id>Schedule</a>
-}
-else
-{
-    @foreach (var f in ViewBag.Fixtures)
-    {
-        ListTeamModel home = teams.First(t => t.Id == f.HomeTeamId);
-        ListTeamModel away = teams.First(t => t.Id == f.AwayTeamId);
-        <div class="row">
-            <div class="col" style="background-color:@home.Color">
-                <h2>@home.Name</h2>
-            </div>
-            @if (f.IsEligible)
+        @if (!Model.IsScheduled && Model.IsActive)
+        {
+            <a class="d-flex justify-content-center" asp-action="Schedule" asp-route-id=@Model.Id>
+                <button id="schedule" class="play-button">Schedule</button>
+            </a>
+        }
+        else
+        {
+            @foreach (var f in ViewBag.Fixtures)
             {
-                <div class="col align-items-center">
-                    <a asp-action="LineUp" asp-route-homeId=@home.Id asp-route-awayId=@away.Id asp-route-id=@Model.Id>
-                        <button>Play Match</button>
-                    </a>
+                ListTeamModel home = teams.First(t => t.Id == f.HomeTeamId);
+                ListTeamModel away = teams.First(t => t.Id == f.AwayTeamId);
+
+                <div class="row match-div" style="padding-top: 1rem">
+                    <div class="col-2">
+                        <div class="logo-wrapper">
+                            <img src=@home.LogoUrl />
+                        </div>
+                    </div>
+                    <div class="col-3 text-center team-name align-middle">@home.Name</div>
+                    @if (f.IsEligible)
+                    {
+                        <div class="col-2">
+                            <a class="d-flex justify-content-center" asp-action="LineUp" asp-route-homeId=@home.Id asp-route-awayId=@away.Id asp-route-id=@Model.Id>
+                                <button class="play-button">Play</button>
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-2 text-center vs align-middle" style="padding-bottom: 0.8rem">VS</div>
+                    }
+                    <div class="col-3 text-center team-name align-middle">@away.Name</div>
+                    <div class="col-2 d-flex justify-content-end">
+                        <div class="logo-wrapper">
+                            <img src=@away.LogoUrl />
+                        </div>
+                    </div>
+                    <div class="match-line"></div>
                 </div>
             }
-            <div class="col" style="background-color:@away.Color">
-                <h2>@away.Name</h2>
-            </div>
-        </div>
-    }
-}
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+        }
+    </div>
+
+    <div class="row d-flex justify-content-center m-3">
+        <img src="~/img/ballMatches.svg" />
+    </div>
+
+    <div class="clarify-div text-center">Matches</div>
+    <div class="container">
+        @foreach (var m in @ViewBag.Matches)
+        {
+            <a asp-action="MatchFacts" asp-route-matchCode=@m.MatchCode>
+                <div class="row match-div listed-match" style="padding-top: 1rem">
+                    <div class="col-2 d-flex">
+                        <div class="logo-wrapper">
+                            <img src=@m.HomeTeamLogo />
+                        </div>
+                    </div>
+                    <div class="col-3 text-center team-name align-middle">@m.HomeTeamName</div>
+                    <div class="col-2 text-center team-name" style="color: #008143;">@m.HomeTeamScore - @m.AwayTeamScore</div>
+                    <div class="col-3 text-center team-name align-middle">@m.AwayTeamName</div>
+                    <div class="col-2 d-flex justify-content-end">
+                        <div class="logo-wrapper">
+                            <img src=@m.AwayTeamLogo />
+                        </div>
+                    </div>
+                    <div class="match-line"></div>
+                </div>
+            </a>
+        }
+    </div>
 </div>
