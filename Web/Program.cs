@@ -9,15 +9,13 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Web.Extensions;
 using Web.ModelBinders.Providers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<NetScoreDbContext>(options =>
-    options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddDbContexts(builder.Configuration);
 
 builder.Services.AddDefaultIdentity<User>(options =>
 {
@@ -40,21 +38,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 //Automapper Profiles
-builder.Services.AddAutoMapper(cfg => cfg.AddProfile<PlayerProfile>());
-builder.Services.AddAutoMapper(cfg => cfg.AddProfile<TeamProfile>());
-builder.Services.AddAutoMapper(cfg => cfg.AddProfile<TournamentProfile>());
-builder.Services.AddAutoMapper(cfg => cfg.AddProfile<FixtureProfile>());
-builder.Services.AddAutoMapper(cfg => cfg.AddProfile<TeamMatchStatisticProfile>());
-builder.Services.AddAutoMapper(cfg => cfg.AddProfile<PlayerMatchStatisticProfile>());
-builder.Services.AddAutoMapper(cfg => cfg.AddProfile<UserProfile>());
+builder.Services.AddAutomapperProfiles();
+builder.Services.AddApplicationServices();
 
 //Services & Repository
-builder.Services.AddScoped<IRepository, Repository>();
-builder.Services.AddScoped<IPlayerService, PlayerService>();
-builder.Services.AddScoped<ITeamService, TeamService>();
-builder.Services.AddScoped<ITournamentService, TournamentService>();
-builder.Services.AddScoped<IMatchService, MatchService>();
-builder.Services.AddScoped<IUserService, UserService>();
+
 
 builder.Services.AddControllersWithViews()
         .AddMvcOptions(options =>
