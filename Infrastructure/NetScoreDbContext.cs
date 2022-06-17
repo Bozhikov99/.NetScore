@@ -1,9 +1,10 @@
 ﻿using Infrastructure.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
-    public class NetScoreDbContext : DbContext
+    public class NetScoreDbContext : IdentityDbContext<User>
     {
         public NetScoreDbContext()
         {

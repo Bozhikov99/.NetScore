@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Models
 {
-    public class User
+    public class User : IdentityUser
     {
         public User()
         {
@@ -12,9 +12,6 @@ namespace Infrastructure.Models
             FavoritePlayers = new List<Player>();
             FavoriteTeams = new List<Team>();
         }
-
-        [Key]
-        public string Id { get; set; }
 
         public virtual ICollection<Team> FavoriteTeams { get; set; }
 
